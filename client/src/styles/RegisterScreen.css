@@ -1,0 +1,74 @@
+.register-container {
+  padding: 30px;
+  max-width: 450px; /* Slightly wider */
+  margin: 40px auto;
+  text-align: center;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input[type='text'],
+.form-group input[type='email'],
+.form-group input[type='password'] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Styles for the checkbox group */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.checkbox-group input[type='checkbox'] {
+  width: auto; /* Don't force checkbox to full width */
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.checkbox-group label {
+  margin-bottom: 0; /* Reset margin */
+  font-weight: normal; /* Normal weight for checkbox label */
+  flex-grow: 1; /* Allow label to take space */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between; /* Pushes buttons apart */
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.form-actions button {
+  padding: 10px 15px;
+  flex-grow: 1; /* Allow buttons to grow */
+}
+
+.register-submit-button {
+  /* Inherits default button styles */
+}
+
+.back-button {
+  background-color: var(--button-secondary-bg); /* Different style for cancel */
+}
+.back-button:hover {
+  background-color: var(--button-secondary-hover-bg);
+}

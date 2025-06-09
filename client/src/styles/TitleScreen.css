@@ -1,0 +1,242 @@
+/* client/src/styles/TitleScreen.css */
+
+/* Combine with global card/center styles */
+.title-screen-container {
+  /* Use styles from .card and .center-content in global.css */
+  /* Add specific overrides or additions here if needed */
+  max-width: 450px; /* Maybe slightly narrower */
+  margin: 40px auto; /* Keep horizontal auto margin */
+  gap: 15px; /* Adjust gap between elements */
+  display: flex; /* Ensure flex is active */
+  flex-direction: column; /* Ensure column direction */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* <<< CENTER items vertically */
+  padding: 30px; /* Adjust padding */
+  /* Override card background */
+  background-color: transparent;
+  border: none; /* Remove border inherited from .card */
+  box-shadow: none; /* Remove shadow inherited from .card */
+  font-family: var(--font-family-display); /* <<< CHANGE FONT for container */
+  min-height: calc(100vh - 200px);
+  text-align: center; /* Center text elements by default */
+}
+
+.title-screen-container h1 {
+  font-family: var(--font-family-display); /* <<< ENSURE THIS IS APPLIED */
+  color: var(--secondary-color); /* Orange Welcome */
+  font-size: 3.5rem; /* Slightly larger */
+  font-weight: 400; /* Fredoka One typically uses 400 */
+  margin-bottom: 10px;
+  text-align: center; /* <<< CENTER Welcome text */
+  width: 100%; /* Ensure it takes full width to center */
+}
+
+.nickname-input,
+.game-code-input {
+  width: 90%; /* Make inputs wider */
+  text-align: center;
+  margin-bottom: 10px; /* Space below inputs */
+  font-family: var(--font-family-display); /* <<< CHANGE FONT for inputs */
+  /* <<< Add centering styles >>> */
+  display: block; /* Ensure it behaves like a block */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+}
+
+.game-code-input {
+  text-transform: uppercase; /* Ensure game code is uppercase visually */
+}
+
+/* --- Icon Display & Selection Styles --- */
+
+.current-icon-section {
+  display: flex;
+  flex-direction: column; /* Stack text and button */
+  align-items: center; /* <<< CENTER icon section content */
+  margin-top: 15px;
+  margin-bottom: 10px;
+  width: 90%;
+  text-align: center;
+}
+
+.current-icon-section p {
+  font-size: 0.9em;
+  color: var(--text-color); /* CHANGE to white */
+  margin-bottom: 8px;
+  display: flex; /* Use flex to align text and icon */
+  align-items: center;
+  justify-content: center; /* <<< CENTER icon itself with text */
+  gap: 8px;
+}
+
+.current-icon-display {
+  font-size: 1.6em; /* Larger icon display */
+  line-height: 1;
+}
+
+.choose-icon-button {
+  /* Use secondary button style */
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  border: 1px solid var(--button-secondary-border);
+  padding: 6px 12px !important;
+  font-size: 0.9rem !important;
+  width: auto !important; /* Don't force full width */
+  margin-top: 0; /* Reset margin */
+}
+.choose-icon-button:hover:not(:disabled) {
+  background-color: var(--button-secondary-hover-bg);
+}
+
+/* Emoji Selector (modified) */
+.emoji-selector {
+  margin-top: 0; /* Remove top margin when list is hidden */
+  margin-bottom: 10px;
+  width: 90%;
+  text-align: center;
+}
+
+/* Only add top border/padding when the list is actually shown */
+.emoji-selector.show-list {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed var(--border-color-light);
+}
+
+.emoji-selector p {
+  font-size: 0.9em;
+  color: var(--text-color-secondary);
+  margin-bottom: 10px;
+}
+
+.emoji-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 8px;
+  padding: 10px;
+  background-color: var(--input-background);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
+
+.emoji-button {
+  font-size: 1.8em;
+  padding: 5px;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji-button:hover {
+  background-color: var(--button-secondary-hover-bg);
+}
+
+.emoji-button.selected {
+  border-color: var(--accent-color);
+  background-color: var(--selected-item-bg);
+}
+
+.hide-icon-list-button {
+  /* Uses .cancel-button styles from old layout, which are good */
+  margin-top: 10px; /* Add some space above hide button */
+}
+
+/* --- End Icon Styles --- */
+
+/* --- Button Styles Specific to Old Layout --- */
+
+.title-screen-container button {
+  width: 90%; /* General button width */
+  padding: 12px 20px; /* Standard padding */
+  font-family: var(--font-family-display); /* <<< CHANGE FONT for buttons */
+  /* Inherit base button styles from global.css */
+}
+
+.host-button {
+  background-color: var(--success-color); /* CHANGE to green */
+  color: var(--button-primary-text);
+}
+.host-button:hover:not(:disabled) {
+  background-color: var(--button-success-hover-bg); /* CHANGE to green hover */
+}
+
+/* Style for the initial 'Join Existing Game' button */
+.join-button-toggle {
+  background-color: var(--button-primary-bg); /* CHANGE to primary blue */
+  color: var(--button-primary-text); /* Change text to white */
+  border: none; /* Remove border if secondary style added one */
+}
+.join-button-toggle:hover:not(:disabled) {
+  background-color: var(--button-primary-hover-bg); /* CHANGE to primary blue hover */
+}
+
+/* Container for when join input is active */
+.join-section-active {
+  display: flex;
+  flex-direction: column; /* Stack input and buttons */
+  align-items: center; /* Center items */
+  width: 90%; /* Match other controls */
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed var(--border-color-light); /* Use lighter border */
+}
+
+/* Confirm Join button */
+.join-button-confirm {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+.join-button-confirm:hover:not(:disabled) {
+  background-color: var(--button-primary-hover-bg);
+}
+
+/* Cancel button */
+.cancel-button {
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  font-size: 0.9rem !important;
+  padding: 6px 12px !important;
+  width: auto !important; /* Don't force full width */
+  margin-top: 0;
+  border: 1px solid var(--button-secondary-border);
+}
+.cancel-button:hover:not(:disabled) {
+  background-color: var(--button-secondary-hover-bg);
+}
+
+/* My Cards button */
+.my-cards-button {
+  margin-top: 20px; /* Add some space above */
+  background-color: var(--button-primary-bg); /* CHANGE to primary blue */
+  color: var(--text-color); /* CHANGE text to white */
+  opacity: 1; /* CHANGE opacity to 100% */
+  /* Inherit padding, font-size etc from general button rules */
+}
+.my-cards-button:hover:not(:disabled) {
+  background-color: var(--button-primary-hover-bg); /* Add hover state */
+}
+
+/* Login/Account buttons */
+.account-button,
+.login-button-title {
+  /* Styles for account and login buttons */
+}
+
+.nickname-section-reverted label {
+  /* Styles for "Current Nickname:" text */
+  color: var(--text-color); /* CHANGE to white */
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  text-align: center; /* <<< CENTER label text */
+  display: block; /* Ensure it takes full width */
+  width: 100%; /* Ensure it takes full width */
+}

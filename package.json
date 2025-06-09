@@ -1,0 +1,55 @@
+{
+  "name": "image-quip",
+  "version": "1.0.0",
+  "description": "A multiplayer party game using images and text for humorous responses",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "npm run start:server & npm run start:client",
+    "start:client": "cd client && npm start",
+    "start:server": "cd server && node server.js",
+    "build": "cd client && npm run build",
+    "lint": "eslint . --ext .js,.jsx --fix",
+    "lint:check": "eslint . --ext .js,.jsx",
+    "format": "prettier --write \"**/*.{js,jsx,json,md,css}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,json,md,css}\"",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.5.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css}": [
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/username/image-quip.git"
+  },
+  "keywords": [
+    "game",
+    "multiplayer",
+    "party-game",
+    "react",
+    "nodejs",
+    "socket.io"
+  ],
+  "author": "",
+  "license": "ISC"
+}

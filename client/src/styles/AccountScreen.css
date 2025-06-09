@@ -1,0 +1,165 @@
+.account-container {
+  padding: 30px;
+  max-width: 500px;
+  margin: 40px auto;
+  /* text-align: center; -- Removed for left-aligning groups */
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Increased gap slightly more */
+  margin-bottom: 20px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group input[type='text'] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* --- Icon Selection Styles --- */
+
+.icon-label-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Space below the label/current icon */
+}
+
+.icon-label-container label {
+  margin-bottom: 0; /* Remove default bottom margin */
+  margin-right: 10px;
+}
+
+.current-icon-display {
+  font-size: 2em; /* Make current icon larger */
+  line-height: 1;
+}
+
+.icon-section {
+  margin-top: 15px; /* Space between icon sections */
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color-light); /* Separator */
+}
+
+.icon-section-title {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--text-color-secondary);
+  text-transform: uppercase;
+  font-family: var(--font-family-sans);
+}
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); /* Responsive grid */
+  gap: 8px;
+  /* Removed background/border from here, apply to button maybe */
+}
+
+.icon-grid.large-grid {
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(40px, 1fr)
+  ); /* Slightly smaller buttons allow more columns */
+  max-height: 300px; /* Limit height and make it scrollable */
+  overflow-y: auto; /* Add scrollbar if needed */
+  padding: 10px; /* Add padding inside the scrollable area */
+  background-color: var(--background-color-secondary); /* Background for scrollable area */
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.no-icons-message {
+  font-style: italic;
+  color: var(--text-color-secondary);
+  grid-column: 1 / -1; /* Span full width */
+  text-align: center;
+  padding: 10px 0;
+}
+
+.icon-button {
+  font-size: 1.8em;
+  padding: 5px;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  background-color: var(--button-secondary-hover-bg);
+}
+
+.icon-button.selected {
+  border-color: var(--accent-color);
+  background-color: var(--selected-item-bg);
+}
+
+.show-more-icons-button,
+.show-less-icons-button {
+  display: block; /* Make it block level */
+  width: 100%; /* Full width */
+  margin-top: 15px; /* Space above button */
+  padding: 8px 15px;
+  text-align: center;
+  background-color: var(--button-secondary-bg); /* Use secondary style */
+  color: var(--button-secondary-text);
+  border: 1px solid var(--button-secondary-border);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.show-more-icons-button:hover,
+.show-less-icons-button:hover {
+  background-color: var(--button-secondary-hover-bg);
+}
+
+/* --- End Icon Selection Styles --- */
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.form-actions button {
+  padding: 10px 15px;
+  flex-grow: 1;
+}
+
+.save-button {
+  /* Inherits default button styles */
+}
+
+.logout-button {
+  background-color: var(--error-color); /* Make logout stand out */
+}
+.logout-button:hover {
+  background-color: var(--error-color-hover); /* Define this variable or use a lighter/darker red */
+}
+
+.close-account-button {
+  margin-top: 10px; /* Space from form */
+  width: 100%; /* Make it full width */
+}

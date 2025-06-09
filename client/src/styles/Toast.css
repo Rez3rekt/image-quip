@@ -1,0 +1,149 @@
+/* Toast Notification Styles */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+  max-width: 400px;
+}
+
+.toast {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 16px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.toast--visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast--leaving {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.toast__icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.toast__message {
+  flex: 1;
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.toast__close {
+  background: none;
+  border: none;
+  color: var(--text-color-secondary);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  margin: -4px;
+  border-radius: 4px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast__close:hover {
+  color: var(--text-color);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Toast type variations */
+.toast--success {
+  border-left: 4px solid var(--success-color);
+}
+
+.toast--error {
+  border-left: 4px solid var(--error-color);
+}
+
+.toast--warning {
+  border-left: 4px solid var(--secondary-color);
+}
+
+.toast--info {
+  border-left: 4px solid var(--primary-color);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .toast-container {
+    left: 16px;
+    right: 16px;
+    top: 16px;
+    max-width: none;
+  }
+
+  .toast {
+    padding: 14px 16px;
+    min-height: 56px;
+    transform: translateY(-100%);
+  }
+
+  .toast--visible {
+    transform: translateY(0);
+  }
+
+  .toast--leaving {
+    transform: translateY(-100%);
+  }
+
+  .toast__message {
+    font-size: 15px;
+  }
+
+  .toast__icon {
+    font-size: 18px;
+  }
+}
+
+/* Animation improvements for better performance */
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: opacity 0.2s ease;
+  }
+
+  .toast--visible {
+    transform: none;
+  }
+
+  .toast--leaving {
+    transform: none;
+  }
+}
+
+/* Dark mode adjustments (if needed) */
+@media (prefers-color-scheme: dark) {
+  .toast {
+    backdrop-filter: blur(12px);
+    background: rgba(42, 47, 58, 0.95);
+  }
+} 

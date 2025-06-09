@@ -1,0 +1,148 @@
+/* Skeleton Loader Styles */
+
+/* Base skeleton styles with shimmer animation */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--disabled-bg) 25%,
+    var(--border-color-light) 50%,
+    var(--disabled-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--border-radius);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Skeleton variants */
+.skeleton--text {
+  height: 1em;
+  border-radius: 4px;
+}
+
+.skeleton--box {
+  border-radius: var(--border-radius);
+}
+
+.skeleton--avatar {
+  border-radius: 50%;
+}
+
+/* Card skeleton */
+.skeleton-card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 16px;
+  box-shadow: var(--box-shadow);
+}
+
+.skeleton-card__image {
+  margin-bottom: 12px;
+  border-radius: var(--border-radius);
+}
+
+.skeleton-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Player list skeleton */
+.skeleton-player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-player-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+/* Game state skeleton */
+.skeleton-game-state {
+  padding: 20px;
+}
+
+.skeleton-game-state__title {
+  margin-bottom: 20px;
+}
+
+.skeleton-game-state__content {
+  margin-top: 20px;
+}
+
+.skeleton-game-state__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Card grid skeleton */
+.skeleton-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* Skeleton group */
+.skeleton-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .skeleton-card {
+    padding: 12px;
+  }
+
+  .skeleton-card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .skeleton-game-state {
+    padding: 16px;
+  }
+
+  .skeleton-game-state__actions {
+    flex-direction: column;
+  }
+
+  .skeleton-player-item {
+    padding: 6px 0;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: var(--disabled-bg);
+  }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(42, 47, 58, 0.6) 25%,
+      rgba(85, 94, 111, 0.4) 50%,
+      rgba(42, 47, 58, 0.6) 75%
+    );
+  }
+} 

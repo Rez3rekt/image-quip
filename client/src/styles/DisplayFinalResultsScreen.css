@@ -1,0 +1,462 @@
+/* client/src/styles/DisplayFinalResultsScreen.css */
+
+/* Main container styling */
+.display-fr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family-primary);
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.display-fr-container.center-content {
+  justify-content: center;
+  font-size: 3vw;
+}
+
+/* Content wrapper */
+.display-fr-content-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  gap: 0.5%;
+  background-color: transparent;
+  overflow: hidden;
+  padding: 0.5vh 0.5vw;
+}
+
+/* Left column - Scores */
+.display-fr-leaderboard-column {
+  flex: 0 0 28%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5vh 1vw;
+  background-color: var(--card-background-darker);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.display-fr-leaderboard-column h3 {
+  font-family: var(--font-family-primary);
+  font-size: 2.2vw;
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 1.5vh;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Leaderboard table styling */
+.display-fr-leaderboard-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 1vh;
+  table-layout: fixed;
+  font-size: 1.6vw;
+}
+
+/* Custom header styling */
+.display-fr-leaderboard-table thead {
+  display: block;
+  width: 100%;
+  margin-bottom: 1vh;
+}
+
+.display-fr-leaderboard-table thead tr {
+  display: grid;
+  grid-template-columns: 20% 55% 25%;
+  width: 100%;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 1vh;
+}
+
+.display-fr-leaderboard-table th {
+  font-size: 2vw;
+  color: var(--text-color);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.display-fr-leaderboard-table th.rank-header {
+  text-align: center;
+  padding: 0;
+}
+
+.display-fr-leaderboard-table th.player-header {
+  text-align: left;
+  padding-left: 3vw;
+  padding-right: 0;
+}
+
+.display-fr-leaderboard-table th.score-header {
+  text-align: right;
+  padding-right: 2vw;
+  padding-left: 0;
+}
+
+/* Table rows */
+.display-fr-leaderboard-table tbody tr {
+  background-color: var(--input-background);
+  margin-bottom: 1.5vh;
+  border-radius: var(--border-radius);
+  height: auto;
+  min-height: 8vh;
+  display: grid;
+  grid-template-columns: 20% 55% 25%;
+  width: 100%;
+  align-items: center;
+}
+
+/* First place styling */
+.display-fr-leaderboard-table tbody tr:first-child {
+  background-color: rgba(var(--accent-color-rgb), 0.2);
+}
+
+/* Table cells */
+.display-fr-leaderboard-table td {
+  padding: 1.2vh 0.8vw;
+  vertical-align: middle;
+  height: 100%;
+}
+
+/* Rank cell */
+.display-fr-leaderboard-table td.rank {
+  font-size: 2.2vw;
+  font-weight: bold;
+  text-align: center;
+  color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Player name cell */
+.display-fr-leaderboard-table td.nickname {
+  display: flex;
+  align-items: center;
+  padding: 1.2vh 0 1.2vh 1vw;
+  position: relative;
+  overflow: visible;
+}
+
+.display-fr-leaderboard-table td.nickname .icon {
+  font-size: 1.8vw;
+  margin-right: 0.6vw;
+  flex-shrink: 0;
+}
+
+.display-fr-leaderboard-table td.nickname .name {
+  font-size: 1.3vw;
+  color: white;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 95%;
+}
+
+.display-fr-leaderboard-table td.nickname .winner-trophy {
+  font-size: 1.8vw;
+  flex-shrink: 0;
+  margin-left: 0.6vw;
+  margin-right: 0.3vw;
+}
+
+/* Score cell */
+.display-fr-leaderboard-table td.score {
+  font-size: 2vw;
+  font-weight: bold;
+  text-align: right;
+  color: var(--primary-color);
+  padding-right: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Right column - Highlights */
+.display-fr-highlights-column {
+  flex: 0 0 71%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5vh 1vw;
+  background-color: var(--card-background-darker);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.display-fr-highlight-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--input-background);
+  border-radius: var(--border-radius);
+  padding: 2vh 2vw 2vh 2vw;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Prompt heading */
+.prompt-heading {
+  font-size: 3vw;
+  color: var(--primary-color);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 2vh;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Images container - make it more prominent */
+.images-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 0 auto;
+  padding: 0;
+  height: 75vh;
+  width: 100%;
+}
+
+/* Increase the size of the image container */
+.image-container {
+  position: relative;
+  width: 540px; /* Made much larger */
+  height: 960px; /* Kept the aspect ratio */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  margin: 0 auto;
+  background-color: var(--card-background);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-container.left {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.image-container.right {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+.submission-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Text responses for Flip the Script */
+.text-response {
+  position: relative;
+  background-color: var(--card-background);
+  border-radius: 12px;
+  padding: 20px;
+  width: 540px;
+  height: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  border: none;
+}
+
+.text-response p {
+  font-size: 1.8vw;
+  margin: 0;
+  max-height: 80%;
+  overflow-y: auto;
+  padding: 10px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-response:first-child {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.text-response:last-child {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+/* Prompt image styling */
+.highlight-prompt-image {
+  width: 540px;
+  height: 960px;
+  object-fit: contain;
+  border-radius: 12px !important;
+  margin: 0 auto;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+  display: block;
+  background-color: var(--card-background);
+  border: none;
+}
+
+/* Navigation dots */
+.display-fr-prompt-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 1vw;
+  margin-top: auto;
+  padding-top: 2vh;
+  margin-bottom: 0.5vh;
+}
+
+.prompt-indicator {
+  width: 1.5vw;
+  height: 1.5vw;
+  border-radius: 50%;
+  background-color: var(--border-color);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.prompt-indicator:hover {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+.prompt-indicator.active {
+  background-color: var(--primary-color);
+  opacity: 1;
+  transform: scale(1.3);
+  box-shadow: 0 0 6px var(--primary-color);
+}
+
+/* Animations */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Improve vote indicator styling */
+.display-fr-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 1.3vw;
+  font-weight: bold;
+}
+
+/* Player name styling */
+.player-name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Vote count styling */
+.vote-count {
+  color: var(--primary-color);
+}
+
+/* Media queries for better responsiveness */
+@media (max-width: 1400px) {
+  .image-container {
+    width: 450px;
+    height: 800px;
+  }
+  .highlight-prompt-image {
+    width: 450px;
+    height: 800px;
+  }
+  .text-response {
+    width: 450px;
+    height: 800px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .image-container {
+    width: 360px;
+    height: 640px;
+  }
+  .highlight-prompt-image {
+    width: 360px;
+    height: 640px;
+  }
+  .text-response {
+    width: 360px;
+    height: 640px;
+  }
+}
+
+@media (max-width: 768px) {
+  .display-fr-content-wrapper {
+    flex-direction: column;
+  }
+
+  .display-fr-leaderboard-column,
+  .display-fr-highlights-column {
+    flex: none;
+    width: 95%;
+    margin: 10px auto;
+  }
+
+  .image-container {
+    width: 300px;
+    height: 533px;
+  }
+  .highlight-prompt-image {
+    width: 300px;
+    height: 533px;
+  }
+  .text-response {
+    width: 300px;
+    height: 533px;
+  }
+}

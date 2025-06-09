@@ -1,0 +1,588 @@
+/* styles/PromptScreen.css */
+
+.prompt-screen-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  /* background-color: var(--card-background); /* Optional dark bg */
+}
+
+.prompt-screen-container h2,
+.response-input-area h3,
+.hand-display-area h3,
+.player-status-list-container h4 {
+  font-family: var(--font-family-display);
+  color: var(--secondary-color);
+}
+
+.prompt-display-area {
+  width: auto !important;
+  max-width: 100% !important;
+  text-align: center;
+  position: relative;
+}
+
+/* Base styles for prompt box (applies to both modes) */
+.current-prompt-box {
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--card-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  color: var(--text-color);
+  margin: 0 auto;
+  /* Default size for text prompts (classic mode) */
+  width: 300px;
+  height: auto;
+  min-height: 200px;
+  max-height: 300px;
+}
+
+/* Special class for Flip the Script mode with images */
+.current-prompt-box.flip-script-mode {
+  padding: 0 !important;
+  margin: 0 auto !important;
+  display: inline-block !important;
+  width: 170px !important; /* Fixed width to match image dimensions */
+  height: auto !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  position: relative !important;
+}
+
+.current-prompt-box p {
+  margin: auto;
+  font-size: 1.5em; /* Slightly smaller than original 1.8em */
+  font-weight: bold;
+  font-family: var(--font-family-sans);
+  text-align: center;
+  max-width: 90%;
+}
+
+.hand-display-area {
+  width: 95%;
+  margin-top: 15px;
+}
+
+.hand-title {
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.hand-images-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 15px;
+  background: var(--input-background); /* Dark background */
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  min-width: 730px; /* <<< Add min-width to prevent shrinking */
+}
+
+.deck-count-indicator {
+  color: var(--text-color-secondary);
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  font-family: var(--font-family-sans);
+}
+
+/* Re-use image-card styles from VotingScreen or global */
+.image-card-wrapper {
+  border: 4px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.image-card-wrapper.selected {
+  border-color: var(--success-color); /* Green selection highlight */
+}
+
+.image-card {
+  width: 100%; /* Fill wrapper */
+  height: auto; /* Height determined by aspect ratio */
+  aspect-ratio: 3 / 4;
+  background-color: var(--card-background); /* Darker placeholder */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: 6px;
+}
+
+.image-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Restore original submit button styles */
+.submit-answer-button {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: var(--success-color); /* Green for submit */
+  color: var(--button-primary-text);
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  transition: background-color 0.2s ease;
+  font-family: var(--font-family-display);
+}
+
+.submit-answer-button:hover:not(:disabled) {
+  background-color: var(--button-success-hover-bg);
+}
+
+/* Add specific style for Flip the Script submit button */
+.submit-answer-button.fts-submit {
+  display: block;
+  margin: 20px auto 10px; /* Center the button with auto margins */
+  min-width: 150px; /* Give it a reasonable minimum width */
+}
+
+.submit-answer-button:disabled {
+  background-color: var(--disabled-bg);
+  color: var(--text-color-secondary);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.prompt-error {
+  color: var(--error-color); /* Use theme error color */
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* All Answered / Waiting State */
+.all-answered-container {
+  text-align: center;
+}
+
+.waiting-message {
+  font-size: 1.1rem;
+  color: var(--text-color); /* Light text */
+  margin-bottom: 20px;
+}
+
+/* Player Status List (Shared potentially) */
+.player-status-list-container {
+  width: 80%;
+  max-width: 500px;
+  margin-top: 30px;
+  border-top: 1px solid #444;
+  padding-top: 20px;
+}
+
+.player-status-list-container h4 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: var(--text-color); /* Light text */
+}
+
+.player-status-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.player-status-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  background-color: var(--input-background); /* Dark bg */
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.player-status-item.my-status {
+  /* Optional: Highlight own status */
+  font-weight: bold;
+}
+
+.player-status-item span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and name */
+}
+
+.player-icon {
+  font-size: 1.1rem;
+}
+
+/* Add this important rule to override any cached styles */
+.prompt-screen-container .prompt-display-area .current-prompt-box {
+  border: none !important;
+  background-color: var(--input-background);
+}
+
+/* Style for the Prompt Image in Flip the Script */
+.prompt-image {
+  display: block;
+  width: 170px !important; /* Fixed width */
+  height: auto !important;
+  object-fit: contain;
+  margin: 0;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.response-input-area {
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center; /* Center all content in the response area */
+}
+
+.response-title {
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 1.1em;
+  text-align: center; /* Explicitly center the title */
+}
+
+.response-textarea {
+  width: 95%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  font-size: 1em;
+  min-height: 60px;
+  resize: vertical;
+  background-color: var(--input-background);
+  color: var(--text-color);
+  font-family: var(--font-family-sans);
+}
+
+/* Style for the new drop zone */
+.card-drop-zone {
+  width: 90%; /* Match prompt area width */
+  max-width: 600px;
+  min-height: 180px; /* Give it a decent minimum height */
+  margin-top: 15px; /* Space below prompt */
+  margin-bottom: 20px; /* Space above hand */
+  padding: 10px;
+  border: 2px dashed var(--border-color); /* Default dashed border */
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.1); /* Very subtle background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Style for when dragging over the NEW drop zone */
+.card-drop-zone.drag-over {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  border-color: var(--primary-color);
+}
+
+/* Style for the drop zone cue text (position relative to drop zone) */
+.drop-zone-cue {
+  color: var(--text-color-secondary);
+  font-style: italic;
+  font-size: 1.1em;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  text-align: center; /* Ensure text is centered */
+}
+
+/* Hide cue when dragging over the NEW drop zone */
+.card-drop-zone.drag-over .drop-zone-cue {
+  opacity: 0.8;
+}
+
+/* Style for the image displayed AFTER a card is dropped (no changes needed here) */
+.submitted-card-image {
+  display: block;
+  max-width: 100%;
+  max-height: 150px; /* Limit height of dropped card */
+  object-fit: contain;
+  border-radius: var(--border-radius);
+}
+
+/* Style for the card in hand AFTER it has been dropped */
+.image-card-wrapper.dropped {
+  opacity: 0.4; /* Dim the card in hand */
+  cursor: not-allowed; /* Indicate it can't be interacted with */
+  /* filter: grayscale(80%); */ /* Optional: make it grayscale */
+}
+
+/* --- Flip Animation Styles (Adapted for Drop Zone) --- */
+.card-drop-zone .flip-card {
+  background-color: transparent;
+  width: 116px;
+  height: 206px;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-drop-zone .flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+/* Flip animation class */
+.card-drop-zone .flip-card-inner.flipping {
+  transform: rotateY(180deg);
+}
+
+.card-drop-zone .flip-card-front,
+.card-drop-zone .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  display: flex; /* Center content */
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.card-drop-zone .flip-card-front {
+  /* Front shows dropped image or cue, no extra background needed */
+  /* If cue is shown, drop zone background is visible */
+}
+
+.card-drop-zone .flip-card-back {
+  background-color: var(--card-back-color, #334); /* Use variable or default */
+  transform: rotateY(180deg);
+  color: white;
+}
+
+.card-drop-zone .card-back-logo {
+  font-size: 2em;
+  font-weight: bold;
+  font-family: var(--font-family-display);
+}
+
+/* Adjust submitted image style if needed within flip structure */
+.card-drop-zone .submitted-card-image {
+  max-height: 100%; /* Allow image to fill front face */
+  border-radius: 0; /* Remove radius if front face handles it */
+}
+
+/* Ensure cue text sits nicely */
+.card-drop-zone .drop-zone-cue {
+  position: relative; /* Adjust positioning if needed */
+}
+
+/* Styles for Drag Overlay */
+.drag-overlay-card {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.2),
+    0 6px 6px rgba(0, 0, 0, 0.23);
+  transform: scale(1.05); /* Slightly larger */
+  width: 100px; /* Match hand card size */
+  height: calc(100px * (16 / 9)); /* Maintain aspect ratio */
+  cursor: grabbing;
+}
+
+.drag-overlay-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Style for the card in hand WHILE IT IS BEING DRAGGED */
+/* This is now handled by the opacity set in Draggable/useSortable, but keep class for reference */
+.image-card-wrapper.dragging {
+  opacity: 0.3;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .hand-images-grid {
+    min-width: 0; /* Remove fixed min-width on smaller screens */
+    gap: 10px; /* Reduce gap */
+    padding: 10px;
+  }
+  /* Adjust card wrapper size in hand on mobile */
+  .hand-images-grid .image-card-wrapper {
+    flex-basis: 90px; /* Control size via wrapper */
+  }
+  .hand-display-area {
+    width: 100%; /* Allow hand area to use full width */
+  }
+  .current-prompt-box {
+    width: 250px !important; /* Reduce size further on medium screens */
+    max-height: 250px !important;
+  }
+  .current-prompt-box.flip-script-mode {
+    width: auto !important;
+    height: auto !important;
+  }
+  .prompt-image {
+    width: auto !important;
+    height: auto !important;
+  }
+}
+@media (max-width: 480px) {
+  /* --- Vertical Tightening --- */
+  .prompt-screen-container {
+    padding-top: 0; /* <<< Remove top padding */
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    gap: 10px;
+  }
+  .prompt-display-area {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .prompt-display-area h3 {
+    /* Target prompt progress title */
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
+  .current-prompt-box {
+    width: 220px !important;
+    max-width: 220px !important;
+    max-height: 200px !important;
+  }
+  .current-prompt-box.flip-script-mode {
+    width: 170px !important; /* Maintain fixed width on mobile */
+    max-width: 170px !important;
+    height: auto !important;
+  }
+  .current-prompt-box p {
+    font-size: 0.7em; /* <<< Reduce font size again */
+  }
+  .card-drop-zone {
+    padding: 5px;
+    min-height: 100px; /* Reduce min height */
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .hand-display-area {
+    margin-top: 2px; /* <<< Reduce space above hand area further */
+  }
+  .hand-title {
+    font-size: 1em;
+    margin-bottom: 8px;
+  }
+  /* --- End Vertical Tightening --- */
+
+  /* Further reduce card wrapper size and remove its padding/border */
+  .hand-images-grid .image-card-wrapper {
+    flex-basis: 70px; /* Try slightly smaller basis */
+    padding: 0; /* Remove wrapper padding */
+    border-width: 0; /* Remove wrapper border */
+  }
+  .hand-images-grid {
+    gap: 8px;
+    padding: 8px;
+    justify-content: flex-start; /* <<< Align items to the start on mobile */
+  }
+
+  /* HIDE Prompt Progress Text */
+  .prompt-progress-text {
+    display: none;
+  }
+
+  /* Match Drop Zone size to hand card size (based on inspection) */
+  .card-drop-zone {
+    width: 56px;
+    height: 100px;
+    min-height: auto;
+    padding: 0;
+    margin-top: 0; /* <<< Remove top margin */
+    margin-bottom: 0; /* <<< Remove bottom margin */
+    border: 1px dashed var(--border-color);
+    border-radius: 6px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  /* Ensure drop cue text is small and doesn't interfere */
+  .drop-zone-cue {
+    font-size: 0.7em;
+    padding: 2px; /* Minimal padding */
+    line-height: 1.1; /* Adjust line height */
+  }
+
+  /* Remove padding from flip card faces inside drop zone on mobile */
+  .card-drop-zone .flip-card-front,
+  .card-drop-zone .flip-card-back {
+    padding: 0; /* <<< Remove padding */
+    /* Ensure height is constrained */
+    height: 100%;
+    box-sizing: border-box; /* Keep box-sizing */
+  }
+}
+/* --- End Responsive Adjustments --- */
+
+/* Hand card styles */
+.hand-images-grid .image-card-wrapper {
+  /* flex-basis: 70px; */
+  width: calc(33.333% - 6px); /* Force 3-wide layout */
+  padding: 0;
+  border-width: 0;
+  box-sizing: border-box; /* Add box-sizing for calc */
+}
+.hand-images-grid {
+  gap: 8px;
+  padding: 8px;
+  justify-content: flex-start;
+  /* min-width: 0; /* Already removed from 768px query */
+  display: flex; /* Ensure flex is set */
+  flex-wrap: wrap; /* Ensure wrap is set */
+}
+
+/* Force container and image styles for Flip the Script */
+.prompt-screen-container .prompt-display-area .current-prompt-box.flip-script-mode {
+  width: 170px !important;
+  height: auto !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  display: inline-block !important;
+  overflow: visible !important;
+  max-width: 170px !important;
+}
+
+.prompt-screen-container
+  .prompt-display-area
+  .current-prompt-box.flip-script-mode
+  img.prompt-image {
+  display: block !important;
+  width: 170px !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+  object-fit: contain !important;
+}

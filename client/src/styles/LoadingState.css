@@ -1,0 +1,34 @@
+/* LoadingState component styles */
+.loading-state-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 200px;
+  padding: 20px;
+}
+
+.loading-state-container.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+.loading-state-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.loading-state-wrapper.card {
+  background-color: var(--card-background);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}

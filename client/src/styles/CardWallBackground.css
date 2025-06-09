@@ -1,0 +1,83 @@
+/* Keyframes for horizontal scrolling */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Translate left by the width of one full set of cards + gaps */
+    transform: translateX(calc(-1 * (var(--cards-per-row) * (var(--card-width) + var(--gap)))));
+  }
+}
+
+@keyframes scrollRight {
+  0% {
+    /* Start shifted left */
+    transform: translateX(calc(-1 * (var(--cards-per-row) * (var(--card-width) + var(--gap)))));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.card-wall-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Hide overflow */
+  z-index: -10; /* Ensure it's behind everything */
+  background-color: var(--background-color); /* Fallback background */
+}
+
+.card-row {
+  display: flex;
+  /* Calculate the number of cards needed for the animation transform */
+  /* This needs to be set dynamically or estimated reliably */
+  --cards-per-row: 20; /* <<< ESTIMATE - Adjust based on typical screen widths & CARD_WIDTH_PX */
+  width: calc(
+    2 * var(--cards-per-row) * (var(--card-width) + var(--gap))
+  ); /* Double width for seamless loop */
+  margin-bottom: var(--gap);
+}
+
+.card-row.scroll-left {
+  animation: scrollLeft 80s linear infinite;
+}
+
+.card-row.scroll-right {
+  animation: scrollRight 80s linear infinite;
+}
+
+.card-tile {
+  width: var(--card-width);
+  height: var(--card-height);
+  margin-right: var(--gap);
+  flex-shrink: 0; /* Prevent shrinking */
+  opacity: 0.1; /* <<< Change from 0.15 */
+  transition: opacity 0.3s ease; /* Optional: fade in? */
+}
+
+.card-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the area, might crop */
+  border-radius: 4px; /* Slight rounding */
+}
+
+/* Style for placeholder when no images are available */
+.card-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.01); /* Very faint background */
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Faint border */
+  border-radius: 4px; /* Match image rounding */
+}
+
+/* Optional: Slightly increase opacity on hover, just for testing */
+/*
+.card-wall-background:hover .card-tile {
+  opacity: 0.3;
+}
+*/

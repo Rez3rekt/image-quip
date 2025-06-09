@@ -1,0 +1,100 @@
+.login-container {
+  padding: 30px;
+  max-width: 400px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--text-color-secondary);
+  font-family: var(--font-family-sans);
+  text-align: left;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between; /* Pushes buttons apart */
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.form-actions button {
+  padding: 10px 15px;
+  flex-grow: 1; /* Allow buttons to grow */
+}
+
+.login-submit-button {
+  /* Inherits default button styles */
+}
+
+.back-button {
+  background-color: var(--button-secondary-bg); /* Different style for cancel */
+}
+.back-button:hover {
+  background-color: var(--button-secondary-hover-bg);
+}
+
+.register-prompt {
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  text-decoration: underline;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit; /* Match surrounding text */
+}
+
+.link-button:hover {
+  color: var(--accent-color-hover);
+}
+
+.register-link {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9em;
+  color: var(--text-color-secondary);
+  font-family: var(--font-family-sans);
+}
+
+.register-link a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.register-link a:hover {
+  text-decoration: none;
+}
+
+.error-message {
+  color: var(--error-color);
+  margin-top: 15px;
+  text-align: center;
+  font-family: var(--font-family-sans);
+}

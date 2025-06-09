@@ -1,0 +1,338 @@
+/* client/src/styles/DisplayVoteRevealScreen.css */
+
+.display-vote-reveal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align to top, let content flow down */
+  padding: 1.5vh 3vw;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh; /* Use viewport height */
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family-primary);
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+.display-vote-reveal-container.center-content {
+  justify-content: center;
+  font-size: 3vw; /* Larger font for messages */
+}
+
+.display-vr-prompt-area {
+  width: 90%;
+  max-width: 900px; /* Match voting screen */
+  margin-bottom: 1vh; /* Match voting screen */
+  text-align: center;
+  flex-shrink: 0; /* Don't shrink prompt */
+  display: inline-block;
+}
+
+.display-vr-prompt-text {
+  font-family: var(--font-family-primary);
+  font-size: clamp(20px, 4vw, 45px);
+  text-align: center;
+  line-height: 1.2;
+  font-weight: normal;
+  color: var(--text-color) !important;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.display-vr-prompt-image {
+  width: 170px !important;
+  height: auto !important;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  margin: 0;
+  display: block;
+}
+
+.display-vr-submissions-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  width: 95%;
+  max-width: 1600px;
+  flex-grow: 1; /* Middle section takes available space */
+  flex-shrink: 1;
+  gap: 2vw;
+  overflow: hidden;
+  min-height: 0;
+  max-height: 70vh; /* << Limit middle area height slightly less than voting to allow for details */
+  padding-bottom: 1vh;
+}
+
+.display-vr-submission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align content top, details bottom */
+  width: 48%;
+  background-color: transparent; /* Remove old bg/border */
+  border: none;
+  border-radius: var(--border-radius) !important; /* Add border radius to the outer container */
+  padding: 0;
+  box-shadow: none;
+  min-height: 0;
+  overflow: hidden !important; /* Ensure inner content respects the border radius */
+}
+
+.display-vr-submission.winner {
+  /* border-color: var(--accent-color); No border on submission div */
+  /* box-shadow: 0 0 25px var(--accent-color), 0 0 10px var(--accent-color) inset; */
+  /* transform: scale(1.03); */
+  /* Apply glow to the card instead */
+}
+.display-vr-submission.tie {
+  /* border-color: var(--primary-color); */
+}
+
+.display-vr-content {
+  /* This div holds the card wrapper */
+  width: 100%;
+  flex-grow: 1; /* Allow content area to take vertical space */
+  flex-shrink: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1vh; /* Space between card and details */
+  min-height: 0;
+  /* Ensure no styles interfere with card display */
+  border-radius: var(--border-radius) !important; /* Add border radius */
+  overflow: hidden !important; /* Force overflow hidden */
+}
+
+/* Card Wrapper Styling - General styles */
+.display-vr-image-card-wrapper {
+  width: 100%;
+  height: 100%; /* Fill the content area */
+  flex-shrink: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5vw;
+  box-sizing: border-box;
+  min-height: 0;
+  border-radius: var(--border-radius) !important; /* Force border radius */
+  overflow: hidden !important; /* Force overflow hidden */
+}
+
+/* Card Styling - General styles */
+.display-vr-image-card {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 9 / 16;
+  max-height: 100%;
+  background-color: var(--card-background-darker);
+  border: none;
+  border-radius: var(--border-radius) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden !important;
+  padding: 1vw;
+  box-sizing: border-box;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* More specific selectors to override any global styles */
+.display-vr-submission .display-vr-content .image-card-wrapper.display-vr-image-card-wrapper {
+  border-radius: var(--border-radius) !important; /* Force border radius */
+  overflow: hidden !important; /* Force overflow hidden */
+}
+
+.display-vr-submission .display-vr-content .image-card.display-vr-image-card {
+  border-radius: var(--border-radius) !important; /* Force border radius */
+}
+
+/* Text Card Styling (New/Adapted) */
+.display-vr-response-text-card {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 9 / 16;
+  max-height: 100%;
+  font-size: clamp(16px, 2.2vw, 35px);
+  padding: 1.5vh 1.5vw;
+  border: none;
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  background-color: var(--card-background-darker);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Apply winner/tie styles to the card itself now */
+.display-vr-submission.winner .display-vr-image-card,
+.display-vr-submission.winner .display-vr-response-text-card {
+  border-color: var(--accent-color);
+  box-shadow:
+    0 0 25px var(--accent-color),
+    0 0 10px var(--accent-color) inset;
+  transform: scale(1.02);
+}
+.display-vr-submission.tie .display-vr-image-card,
+.display-vr-submission.tie .display-vr-response-text-card {
+  border-color: var(--primary-color);
+}
+
+/* Image within card */
+.display-vr-submission-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--border-radius) !important; /* Force border radius on the image itself */
+}
+
+/* Text within text card */
+.display-vr-response-text {
+  font-family: var(--font-body);
+  text-align: center;
+  word-wrap: break-word;
+  /* Removed sizing/padding, handled by card */
+}
+
+.display-vr-details {
+  text-align: center;
+  width: 100%;
+  flex-shrink: 0;
+  margin: 0; /* << Reset margin */
+  padding: 0; /* << Reset padding */
+}
+
+.display-vr-votes {
+  /* Style for individual vote counts */
+  font-family: var(--font-family-primary);
+  font-size: clamp(16px, 2.8vw, 35px);
+  font-weight: bold;
+  color: var(--text-color);
+  flex-shrink: 0; /* Match target */
+  padding: 0.5vh 0; /* Match target */
+  margin: 0; /* Reset margin */
+  line-height: 1.6; /* Match inherited */
+  text-align: center; /* Match inherited */
+}
+
+.display-vr-status-message {
+  /* Style for "Waiting for host..." */
+  font-family: var(--font-family-primary);
+  font-size: clamp(16px, 2.8vw, 35px);
+  font-weight: normal;
+  color: var(--text-color);
+  flex-shrink: 0;
+  padding: 0.5vh 0;
+  margin: 0;
+  line-height: 1.6; /* Match inherited */
+  text-align: center;
+}
+
+/* Direct targeting for the element shown in devtools */
+.display-vr-submission-winner #id_0 .display-vr-image-card-wrapper,
+div.display-vr-submission
+  div.display-vr-content
+  div.image-card-wrapper.display-vr-image-card-wrapper,
+.display-vr-submission .display-vr-content > .image-card-wrapper.display-vr-image-card-wrapper,
+.display-vr-submission > .display-vr-content > .image-card-wrapper {
+  border-radius: var(--border-radius) !important; /* Absolute force border radius */
+  overflow: hidden !important; /* Absolute force overflow hidden */
+  border: 2px solid var(--border-color-light) !important; /* Try to ensure the border follows the radius */
+}
+
+/* Target the image card directly with high specificity */
+.display-vr-content > .image-card-wrapper > .image-card,
+.image-card-wrapper.display-vr-image-card-wrapper .image-card.display-vr-image-card {
+  border-radius: var(--border-radius) !important;
+  overflow: hidden !important;
+}
+
+/* Super-specific selector targeting the purple border shown in DevTools */
+div[class*='display-vr'] .image-card-wrapper.display-vr-image-card-wrapper,
+div.image-card-wrapper.display-vr-image-card-wrapper.display-vr-image-card-wrapper,
+div.image-card-wrapper.display-vr-image-card-wrapper,
+.display-vr-image-card-wrapper.display-vr-image-card-wrapper,
+.display-vr-submission * .display-vr-image-card-wrapper,
+.display-vr-content * .display-vr-image-card-wrapper {
+  border-radius: 8px !important; /* Increase border radius for visibility */
+  overflow: hidden !important;
+  border: none !important;
+}
+
+/* Everything inside the wrapper should have rounded corners too */
+div[class*='display-vr'] .image-card-wrapper.display-vr-image-card-wrapper *,
+div.image-card-wrapper.display-vr-image-card-wrapper.display-vr-image-card-wrapper *,
+.display-vr-image-card-wrapper.display-vr-image-card-wrapper * {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+/* Remove any potential borders or backgrounds that could interfere */
+.display-vr-submission,
+.display-vr-content,
+.image-card-wrapper,
+.image-card,
+.display-vr-image-card-wrapper,
+.display-vr-image-card {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Add border and rounded corners only to the main card */
+.display-vr-image-card-wrapper.display-vr-image-card-wrapper {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+/* Force container and image styles for Flip the Script in display vote reveal mode */
+.display-vote-reveal-container .display-vr-prompt-area {
+  width: 170px !important;
+  height: auto !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  display: inline-block !important;
+  overflow: visible !important;
+  max-width: 170px !important;
+}
+
+.display-vote-reveal-container .display-vr-prompt-area img.display-vr-prompt-image {
+  display: block !important;
+  width: 170px !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+  object-fit: contain !important;
+}
+
+/* Classic mode prompt box styles - update for vertical centering */
+.display-vote-reveal-container .display-vr-prompt-area:not(:has(img)) {
+  width: 200px !important;
+  height: 200px !important;
+  background-color: var(--card-background) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  padding: 15px !important;
+  margin: 0 auto 1vh auto !important;
+}

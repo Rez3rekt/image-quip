@@ -1,0 +1,555 @@
+.lobby-container {
+  padding: 30px;
+  text-align: center;
+}
+
+.lobby-container h2,
+.game-settings h4,
+.custom-prompts-section h3 {
+  font-family: var(--font-family-display); /* Apply display font to titles */
+  color: var(--secondary-color); /* Use theme accent color (Orange) */
+}
+
+.lobby-container h4 {
+  /* Style for Players, Game Settings, Custom Prompts headers */
+  margin-top: 30px; /* <<< ADD THIS MARGIN */
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 5px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-code-display-wrapper {
+  display: inline-flex; /* Align items inline */
+  align-items: center; /* Vertically center */
+  gap: 8px; /* Space between text and button */
+  background-color: var(--input-background); /* Dark background */
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color); /* Add subtle border */
+  color: var(--text-color); /* Set base text color to white */
+}
+
+.game-code-text strong {
+  font-family: var(--font-family-display); /* Use display font for code */
+  font-size: 1.2em;
+  color: var(--secondary-color); /* Use accent orange */
+  letter-spacing: 1px;
+}
+
+.copy-button {
+  background: none;
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+  line-height: 1; /* Ensure button doesn't get too tall */
+  transition: background-color 0.2s;
+  color: var(--text-color-secondary); /* Ensure text is visible */
+}
+
+.copy-button:hover {
+  background-color: var(--button-secondary-hover-bg);
+  color: var(--text-color);
+}
+
+.player-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px auto;
+  max-width: 400px; /* Slightly wider */
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space out elements */
+  background-color: var(--input-background); /* Dark background */
+  color: var(--text-color); /* Light text */
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 10px; /* Increased spacing */
+  border: 1px solid var(--border-color-light);
+  gap: 10px; /* Add gap for button */
+}
+
+.player-icon {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.player-nickname {
+  flex-grow: 1; /* Take up available space */
+  text-align: left; /* Align nickname left */
+  font-weight: bold;
+  font-family: var(--font-family-sans); /* Ensure sans-serif */
+}
+
+.player-indicators {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between indicators */
+}
+
+.host-indicator {
+  /* Removed commented-out font-size */
+}
+
+.you-indicator {
+  font-size: 0.9em;
+  color: var(--text-color-secondary); /* Lighter grey */
+  font-style: italic;
+  font-family: var(--font-family-sans);
+}
+
+/* Style for the container holding the lobby action buttons */
+.lobby-actions {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color-light);
+  /* display: flex; */
+  display: grid; /* <<< Use Grid */
+  grid-template-columns: 1fr 1fr; /* <<< Two equal columns */
+  /* justify-content: center; <-- Not needed for grid */
+  gap: 20px;
+  /* align-items: center; <-- Not needed for grid columns */
+}
+
+.start-button,
+.leave-lobby-button {
+  /* Remove flex properties */
+  /* flex-grow: 0; */
+  /* flex-shrink: 0; */
+  /* flex-basis: calc(50% - 10px); */
+  width: 100%; /* <<< Make button fill its grid cell */
+  padding: 12px 20px;
+  font-size: 1.1em;
+  font-family: var(--font-family-display);
+  border: none;
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    opacity 0.2s;
+  margin-top: 0;
+  box-sizing: border-box;
+}
+
+.start-button {
+  background-color: var(--success-color); /* <<< ADD green background */
+  color: var(--button-primary-text); /* Ensure white text */
+}
+
+/* Add hover state specifically for start button */
+.start-button:hover:not(:disabled) {
+  background-color: var(--button-success-hover-bg); /* <<< ADD green hover */
+}
+
+/* Disabled state */
+.start-button:disabled {
+  background-color: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.leave-lobby-button {
+  /* background-color: var(--button-primary-bg); */
+  background-color: var(--button-danger-bg); /* <<< Use Danger background */
+  color: var(--button-danger-text); /* <<< Use Danger text */
+}
+
+/* Add hover state specifically for leave button */
+.leave-lobby-button:hover:not(:disabled) {
+  /* background-color: var(--button-primary-hover-bg); */
+  background-color: var(--button-danger-hover-bg); /* <<< Use Danger hover */
+}
+
+/* Disabled state */
+.leave-lobby-button:disabled {
+  background-color: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.waiting-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+}
+
+.waiting-message {
+  color: var(--text-color-secondary);
+  font-style: italic;
+  margin: 5px 0;
+  font-family: var(--font-family-sans);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* --- Game Settings --- */
+.game-settings {
+  /* Removed background-color */
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 20px;
+  border-top: 1px solid #444; /* Add separator like custom prompts */
+}
+
+.game-settings h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.setting-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between label and input */
+}
+
+.setting-item label {
+  font-weight: bold;
+  color: var(--text-color); /* Ensure light label text */
+  flex-basis: 180px;
+  text-align: right;
+  font-family: var(--font-family-sans); /* Ensure sans-serif */
+}
+
+/* Override flex for game mode item to stack */
+.game-mode-item {
+  flex-direction: column; /* Stack children vertically */
+  align-items: flex-start; /* Align children to the left */
+}
+
+/* Layout for the selector part */
+.game-mode-selector-container {
+  display: flex; /* Use flex for label + select */
+  align-items: center;
+  gap: 10px;
+  width: 100%; /* Take full width */
+  margin-bottom: 8px; /* Space between selector and description */
+}
+
+.game-mode-selector-container select {
+  flex-grow: 1; /* Allow select to take remaining space */
+}
+
+/* Style for the description */
+.game-mode-description {
+  font-size: 0.85em;
+  /* color: var(--text-color-secondary); */
+  color: var(--text-color); /* Use primary text color */
+  /* width: 100%; */
+  width: 90%; /* Set a width less than full */
+  /* margin-top: 5px; <-- Remove specific top margin */
+  margin-left: auto; /* Center the block */
+  margin-right: auto; /* Center the block */
+  padding-left: 0;
+  line-height: 1.3;
+  /* text-align: left; */
+  text-align: center; /* Center the text */
+  font-family: var(--font-family-sans); /* Match label font */
+}
+
+/* Ensure inputs inherit theme */
+.setting-item select,
+.setting-item input[type='number'] {
+  padding: 5px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.95em;
+  background-color: var(--input-background); /* Dark input background */
+  color: var(--text-color); /* Light input text */
+  font-family: var(--font-family-sans); /* Ensure sans-serif */
+}
+
+.setting-item input[type='checkbox'] {
+  width: auto; /* Don't stretch checkbox */
+  cursor: pointer;
+  accent-color: var(--success-color); /* Match Start button theme */
+}
+
+.settings-note {
+  font-size: 0.85em;
+  color: #aaa; /* Slightly lighter grey for note */
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* --- Custom Prompts Section Styling --- */
+.custom-prompts-section {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #444; /* Keep separator line */
+  /* Removed background-color if it was ever added */
+}
+
+.custom-prompts-section h3 {
+  margin-bottom: 10px;
+}
+
+.custom-prompt-input-area {
+  display: flex; /* Align input and button */
+  gap: 10px; /* Space between input and button */
+  margin-bottom: 15px;
+}
+
+.custom-prompt-input {
+  flex-grow: 1; /* Allow input to take available space */
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--input-background); /* Darker input background */
+  color: var(--text-color);
+  font-family: var(--font-family-sans);
+}
+
+.add-prompt-button {
+  /* padding: 8px 15px; */
+  padding: 10px 15px; /* Adjusted padding */
+  background-color: var(--button-primary-bg); /* Use primary blue */
+  color: var(--button-primary-text);
+  border: none;
+  /* border-radius: 4px; */
+  border-radius: var(--button-border-radius); /* Use variable */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: var(--font-family-display);
+  font-size: 1em; /* Set explicit font size */
+}
+
+.add-prompt-button:hover:not(:disabled) {
+  background-color: var(--button-primary-hover-bg);
+}
+
+.add-prompt-button:disabled {
+  background-color: #4f545c; /* Greyed out when disabled */
+  cursor: not-allowed;
+}
+
+.custom-prompts-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px; /* <<< ADD specific top margin */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.custom-prompts-list li {
+  background-color: var(--input-background);
+  color: var(--text-color);
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  white-space: nowrap;
+  display: flex; /* Use flex to align text and button */
+  align-items: center;
+  gap: 5px; /* Space between text and delete button */
+  font-family: var(--font-family-sans);
+}
+
+/* --- Delete Prompt Button Styling --- */
+.delete-prompt-button {
+  background: none;
+  border: none;
+  color: var(--error-color); /* Use theme error color */
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 3px;
+  line-height: 1; /* Prevent extra height */
+  margin-left: 5px; /* Space from prompt text */
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.delete-prompt-button:hover {
+  color: var(--button-danger-hover-bg); /* Use theme error hover */
+  opacity: 1;
+}
+
+.no-custom-prompts-message {
+  color: var(--text-color-secondary);
+  font-style: italic;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+/* Style input fields and select dropdowns */
+.lobby-container input[type='text'],
+.lobby-container input[type='number'],
+.lobby-container select {
+  background-color: var(--input-background); /* Use a variable for background */
+  color: var(--text-color); /* Use variable for text color */
+  border: 1px solid var(--border-color); /* Use variable for border */
+  border-radius: 4px;
+  padding: 8px 10px; /* Adjust padding as needed */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  width: auto; /* Allow inputs to size based on content or specific width */
+  min-width: 60px; /* Ensure number inputs have a minimum width */
+}
+
+/* Slightly different styling for the custom prompt input to make it wider */
+.custom-prompt-area input[type='text'] {
+  flex-grow: 1; /* Allow it to take available space */
+  min-width: 200px; /* Ensure it has a decent minimum width */
+}
+
+/* Style for focused inputs */
+.lobby-container input[type='text']:focus,
+.lobby-container input[type='number']:focus,
+.lobby-container select:focus {
+  outline: none;
+  border-color: var(--primary-accent); /* Highlight focus with accent color */
+  box-shadow: 0 0 0 2px var(--primary-accent-transparent); /* Optional: add a subtle glow */
+}
+
+/* Style disabled inputs/selects if needed */
+.lobby-container input:disabled,
+.lobby-container select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Ensure selects use the theme */
+.lobby-container select {
+  appearance: none; /* Remove default system appearance */
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23cccccc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom dropdown arrow */
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 30px; /* Make space for the arrow */
+}
+
+/* <<< Kick Button Styles >>> */
+.kick-button {
+  background: none;
+  border: 1px solid var(--button-danger-bg); /* Use danger color for border */
+  color: var(--button-danger-bg); /* Use danger color for text */
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-left: 10px; /* Space from player name */
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.kick-button:hover {
+  background-color: var(--button-danger-bg);
+  color: var(--button-danger-text); /* White text on hover */
+}
+
+/* <<< End Kick Button Styles >>> */
+
+/* Styles for Display Player Picker */
+.display-player-controls {
+  margin-top: 15px; /* Space above the button/picker */
+  margin-bottom: 15px; /* Space below the button/picker */
+  text-align: center; /* <<< ADD THIS TO CENTER THE BUTTON >>> */
+}
+
+.display-picker-list {
+  list-style: none;
+  padding: 5px 0;
+  margin-top: 5px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  max-width: 250px; /* Optional: constrain width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.display-picker-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  margin: 2px 5px;
+  display: flex; /* Align icon and text */
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+}
+
+.display-picker-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.display-picker-info {
+  padding: 8px 12px;
+  font-style: italic;
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+.set-display-button {
+  /* Assuming general button styles are in global.css */
+  /* Add specific overrides if needed */
+  padding: 8px 12px;
+  margin-bottom: 5px; /* Add some space below button */
+}
+
+.display-indicator {
+  margin-left: 8px; /* More space for the emoji */
+  font-style: normal; /* Ensure emoji isn't italic if parent is */
+  display: inline-block; /* Helps with alignment */
+}
+
+/* Add styles for number control */
+.number-control {
+  display: flex;
+  align-items: center;
+  background-color: var(--input-background);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  width: 120px;
+}
+
+.number-control-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--input-background);
+  color: var(--text-color);
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  padding: 0;
+}
+
+.number-control-button:hover:not(:disabled) {
+  background-color: var(--button-secondary-hover-bg);
+}
+
+.number-control-button:disabled {
+  color: var(--text-color-secondary);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.number-display {
+  flex: 1;
+  text-align: center;
+  padding: 5px 0;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: bold;
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  min-width: 30px;
+}

@@ -1,0 +1,128 @@
+/* client/src/styles/DisplayVotingScreen.css */
+
+.display-voting-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align top, let middle grow */
+  padding: 1.5vh 3vw;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family-primary);
+  overflow: hidden; /* Prevent scrollbars on the main container */
+}
+
+.display-voting-container.center-content {
+  justify-content: center;
+  font-size: 3vw;
+}
+
+.display-prompt-text {
+  font-family: var(--font-family-primary);
+  font-size: clamp(20px, 4vw, 45px);
+  text-align: center;
+  line-height: 1.2;
+  font-weight: normal; /* Added for consistency */
+  flex-shrink: 0; /* Prompt should not shrink */
+  width: 90%;
+  max-width: 900px; /* Reduced max-width */
+  padding: 1vh 1vw;
+  margin-bottom: 1vh;
+  color: var(--primary-color); /* << Set color to primary blue */
+}
+
+.display-submissions-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  width: 95%;
+  max-width: 1600px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  gap: 2vw;
+  overflow: hidden;
+  min-height: 0;
+  max-height: 75vh; /* << Limit max height of the submissions area */
+  padding-bottom: 1vh;
+}
+
+.display-submission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 48%;
+  min-height: 0;
+  /* Removed flex grow/shrink, let parent area control size */
+}
+
+.display-submission-image-card-wrapper {
+  width: 100%;
+  height: 100%; /* Fill the column vertically */
+  flex-shrink: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5vw;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.display-submission-image-card {
+  width: 360px;
+  height: 640px; /* Reduced height to match prompt */
+  background-color: var(--card-background);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 1vw;
+  box-sizing: border-box;
+}
+
+.display-submission-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--border-radius);
+}
+
+.display-submission-text-content {
+  width: 360px;
+  height: 640px; /* Reduced height to match prompt */
+  font-size: clamp(16px, 2.2vw, 35px);
+  padding: 1.5vh 1.5vw;
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  background-color: var(--card-background);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+/* Removed .display-submitter-info styles as the element is gone */
+
+.display-vote-tally {
+  font-size: clamp(16px, 2.8vw, 35px);
+  font-weight: bold;
+  flex-shrink: 0; /* Vote tally should not shrink */
+  padding: 0.5vh 0;
+  /* margin-top: 0.5vh; */ /* Remove margin, rely on container padding/spacing */
+  color: var(--text-color); /* Added for explicitness */
+  line-height: 1.6 !important; /* Added to match reveal screen, made important */
+  text-align: center; /* Added to match reveal screen */
+  margin: 0; /* Added to match reveal screen */
+}
+
+/* Removed .display-vr-content as it's not used in this file */

@@ -1,0 +1,819 @@
+/* Add style for the automatic advancement note */
+.auto-advance-note {
+  margin-top: 15px;
+  font-style: italic;
+  color: #aaa;
+  text-align: center;
+}
+
+/* Prompt History Section */
+.prompt-history-section {
+  margin-top: 30px;
+  width: 100%;
+  max-width: 800px; /* Adjust as needed */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.prompt-history-section h3 {
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.prompt-history-grid {
+  display: flex;
+  flex-direction: column; /* Stack prompt items vertically */
+  gap: 20px; /* Space between prompt items */
+}
+
+.prompt-history-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: var(--card-background); /* Dark card bg */
+  border-radius: var(--border-radius, 8px);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.prompt-history-identifier {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.prompt-history-text {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: var(--text-color);
+  font-family: var(--font-family-sans);
+}
+
+/* Styles for the Prompt Image Card in History */
+.prompt-history-identifier .image-card-wrapper,
+.submission-pair .image-card-wrapper {
+  /* Apply consistent wrapper style */
+  display: inline-block;
+  max-width: 200px;
+  width: 100%; /* Allow shrinking */
+  margin: 0 auto 8px auto; /* Center card, add bottom margin */
+  vertical-align: middle;
+  border-radius: 6px; /* Match general card style */
+  overflow: hidden; /* Keep image contained */
+  aspect-ratio: 9 / 16; /* Define aspect ratio */
+  background-color: var(--input-background, #444); /* Placeholder */
+  border: 1px solid var(--border-color-light, #555);
+}
+
+.prompt-history-identifier .image-card,
+.submission-pair .image-card {
+  /* Apply consistent card style */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* Remove padding if image fills */
+  background-color: transparent; /* Wrapper has background */
+}
+
+.prompt-history-image,
+.submission-pair .submission-image {
+  /* Apply consistent image style */
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Changed from 'cover' to 'contain' to prevent GIF cropping */
+  border-radius: 4px; /* Slightly smaller radius inside wrapper */
+}
+
+/* Flip the Script specific styles */
+.flip-script-prompt-wrapper {
+  width: 200px !important;
+  max-width: 200px !important;
+  aspect-ratio: 9 / 16 !important;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.flip-script-image-card {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.flip-script-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+}
+
+.flip-script-response-wrapper {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--card-background-darker, #2a2f3a);
+  border-radius: 8px;
+  border: 1px solid var(--border-color-light, #555);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+/* Remove specific height/width rules that might conflict */
+/* .prompt-history-image { max-height: 150px; } */
+/* .submission-pair .submission-image { max-height: 120px; } */
+
+.submission-pair .submission-image {
+  cursor: pointer; /* Keep clickable cursor */
+}
+
+.prompt-history-submissions {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 15px;
+  width: 100%;
+}
+
+.submission-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 48%;
+}
+
+/* Styles for the Text Response in History */
+.submission-pair .response-text-wrapper {
+  /* Add a wrapper for text */
+  display: inline-block;
+  max-width: 200px;
+  width: 100%;
+  margin: 0 auto 8px auto;
+  vertical-align: middle;
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 9 / 16; /* Match image aspect ratio */
+  background-color: var(--input-background);
+  border: 1px solid var(--border-color);
+  padding: 10px; /* Padding inside the text card */
+  box-sizing: border-box; /* Include padding in size */
+  display: flex; /* Center text vertically */
+  align-items: center;
+  justify-content: center;
+}
+
+.response-text-history {
+  font-size: 1em;
+  word-wrap: break-word;
+  color: var(--text-color);
+  font-family: var(--font-family-sans);
+  text-align: center;
+  width: 100%;
+  /* Remove fixed heights/backgrounds/borders from text itself */
+}
+
+.submission-info {
+  font-size: 0.9em;
+  color: var(--text-color-secondary);
+  font-family: var(--font-family-sans);
+}
+
+.submission-info .vote-count {
+  color: var(--success-color); /* Use success green for votes */
+  font-weight: bold;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Clean up potentially conflicting general styles from previous attempts */
+/* Remove these if they exist lower down */
+/* 
+.image-card-wrapper {
+    ...
+}
+.image-card {
+    ...
+}
+.image-card img.submission-image {
+    ...
+}
+.submission-image {
+   ...
+}
+*/
+
+/* ... styles for add card button, modal, actions ... */
+
+.results-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Space between buttons */
+  margin-top: 20px; /* Space above buttons */
+  margin-bottom: 30px; /* Space below buttons */
+}
+
+/* Base style for action buttons */
+.results-actions .action-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+  color: white;
+  font-weight: bold;
+  font-family: var(--font-family-display);
+}
+
+.results-actions .action-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.results-actions .action-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific button colors */
+.results-actions .continue-button {
+  background-color: var(--success-color);
+}
+.results-actions .continue-button:hover:not(:disabled) {
+  background-color: var(--button-success-hover-bg);
+}
+
+.results-actions .new-game-lobby-button {
+  background-color: var(--button-primary-bg);
+}
+.results-actions .new-game-lobby-button:hover:not(:disabled) {
+  background-color: var(--button-primary-hover-bg);
+}
+
+.results-actions .main-menu-button {
+  background-color: var(--button-danger-bg);
+}
+.results-actions .main-menu-button:hover:not(:disabled) {
+  background-color: var(--button-danger-hover-bg);
+}
+
+/* Remove old button style if it exists */
+.new-game-button {
+  /* Remove or comment out styles for the old button */
+}
+
+/* Styles for ResultsScreen.css */
+
+.results-container {
+  padding: 20px;
+  /* background-color: var(--card-background); /* Optional dark bg */
+  text-align: center;
+}
+
+.results-container h2,
+.results-container h3 {
+  font-family: var(--font-family-display);
+  color: var(--secondary-color);
+  margin-bottom: 15px;
+}
+
+/* Responsive adjustments for Flip the Script elements */
+@media (max-width: 768px) {
+  .flip-script-prompt-wrapper {
+    width: 180px !important;
+    max-width: 180px !important;
+  }
+
+  .flip-script-response-wrapper {
+    max-width: 180px;
+  }
+
+  .response-text-history {
+    font-size: 0.9em;
+  }
+
+  /* Improve results container for mobile */
+  .results-container {
+    padding: 15px 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  /* Fix leaderboard width */
+  .leaderboard-table {
+    max-width: 100%;
+    font-size: 0.9em;
+  }
+
+  /* Better button layout */
+  .results-actions {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .results-actions .action-button {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1em;
+  }
+
+  /* Fix prompt history for mobile */
+  .prompt-history-submissions {
+    gap: 10px;
+  }
+
+  .submission-pair {
+    width: 45%;
+  }
+
+  /* Mobile button utility class */
+  .mobile-full-width {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+  .results-container h2 {
+    font-size: 1.4em;
+  }
+
+  .results-container h3 {
+    font-size: 1.2em;
+  }
+
+  .flip-script-prompt-wrapper {
+    width: 130px !important;
+    max-width: 130px !important;
+  }
+
+  .flip-script-response-wrapper {
+    max-width: 130px;
+  }
+
+  .response-text-history {
+    font-size: 0.75em;
+  }
+
+  .prompt-history-submissions {
+    gap: 8px;
+  }
+
+  /* Improve leaderboard display */
+  .leaderboard-table {
+    font-size: 0.8em;
+  }
+
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 8px 6px;
+  }
+
+  /* Remove the fixed height rule that was overriding our responsive styles */
+  .submission-pair .image-card {
+    min-height: 180px !important;
+    height: auto !important;
+  }
+
+  .image-card-wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Adjust spacing for smaller screens */
+  .prompt-history-item {
+    padding: 10px;
+  }
+
+  /* Make sure images scale properly */
+  .submission-image.inspectable-image {
+    object-fit: contain !important;
+  }
+
+  .player-nickname {
+    max-width: calc(100% - 30px);
+    font-size: 0.95em;
+  }
+
+  /* Override the existing zebra striping that might be causing gaps */
+  .leaderboard-table tbody tr:nth-child(odd):not(.my-row),
+  .leaderboard-table tbody tr:nth-child(even):not(.my-row) {
+    background: none;
+  }
+
+  /* Apply a single solid background to the entire table */
+  .leaderboard-table {
+    background-color: var(--card-background-darker);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
+  /* Style the header */
+  .leaderboard-table thead tr {
+    background-color: var(--primary-color);
+    border-bottom: none;
+  }
+
+  .leaderboard-table th {
+    color: white;
+    font-weight: bold;
+    border: none;
+  }
+
+  /* Style each row with a solid bottom border to connect them */
+  .leaderboard-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  /* Remove the border from the last row */
+  .leaderboard-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  /* Ensure highlighted row has distinct styling */
+  .leaderboard-table tbody tr.my-row {
+    background-color: rgba(74, 144, 226, 0.2);
+  }
+
+  /* Adjust cell padding and ensure cell borders don't create gaps */
+  .leaderboard-table td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border: none;
+  }
+
+  /* Ensure no vertical spacing between rows */
+  .leaderboard-table tr {
+    line-height: normal;
+  }
+}
+
+@media (max-width: 375px) {
+  .results-container h2 {
+    font-size: 1.3em;
+  }
+
+  .results-container h3 {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+  }
+
+  .leaderboard-table {
+    font-size: 0.7em;
+  }
+
+  .leaderboard-table th:first-child,
+  .leaderboard-table td:first-child {
+    width: 10% !important;
+  }
+
+  .leaderboard-table th:last-child,
+  .leaderboard-table td:last-child {
+    width: 20% !important;
+  }
+
+  .leaderboard-table th:nth-child(2),
+  .leaderboard-table td:nth-child(2) {
+    width: 70% !important;
+  }
+
+  .player-icon,
+  .winner-indicator {
+    font-size: 0.9em;
+    margin: 0 2px;
+  }
+
+  .submission-pair .image-card {
+    min-height: 150px !important;
+  }
+
+  .results-actions .action-button {
+    padding: 10px 0;
+  }
+
+  /* Even smaller prompt images */
+  .flip-script-prompt-wrapper {
+    width: 110px !important;
+    max-width: 110px !important;
+  }
+
+  .flip-script-response-wrapper {
+    max-width: 110px;
+  }
+
+  .player-nickname {
+    max-width: calc(100% - 25px);
+    font-size: 0.9em;
+  }
+}
+
+/* Remove leaderboard-section styles */
+/*
+.leaderboard-section {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: var(--input-background);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+*/
+
+.leaderboard-table {
+  width: 100%;
+  max-width: 600px;
+  margin: 10px auto;
+  border-collapse: collapse;
+  color: var(--text-color);
+  font-family: var(--font-family-sans);
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.leaderboard-table th {
+  color: var(--text-color-secondary);
+  font-weight: bold;
+}
+
+.leaderboard-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.my-row td {
+  /* Optional: Highlight user's row */
+  background-color: rgba(74, 144, 226, 0.1); /* Faint blue tint */
+}
+
+.leaderboard-table .player-icon {
+  margin-right: 8px;
+}
+
+.winner-indicator {
+  margin-left: 8px;
+}
+
+/* Add Card Button (+) */
+.add-card-button {
+  /* Base styles are inline in component, just define theme colors */
+  background-color: var(--button-primary-bg) !important; /* Override inline */
+  color: var(--button-primary-text) !important;
+}
+.add-card-button:hover {
+  background-color: var(--button-primary-hover-bg) !important;
+}
+
+/* Add styles for player nickname to handle text overflow */
+.player-nickname {
+  max-width: calc(100% - 40px); /* Leave space for icon and possible winner badge */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@media (max-width: 480px) {
+  .player-nickname {
+    max-width: calc(100% - 30px);
+    font-size: 0.95em;
+  }
+}
+
+@media (max-width: 375px) {
+  .player-nickname {
+    max-width: calc(100% - 25px);
+    font-size: 0.9em;
+  }
+}
+
+/* Mobile-friendly wrapper for results screen */
+.mobile-results-wrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .mobile-results-wrapper {
+    padding: 5px;
+  }
+}
+
+/* Complete rewrite of mobile leaderboard styles to eliminate gaps */
+@media (max-width: 768px) {
+  /* Complete reset of table styling */
+  .mobile-leaderboard-fix {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    margin: 0 auto;
+  }
+
+  /* Style the table header as a row */
+  .mobile-leaderboard-fix thead {
+    display: block;
+    width: 100%;
+  }
+
+  .mobile-leaderboard-fix thead tr {
+    display: flex;
+    width: 100%;
+    background-color: var(--primary-color);
+  }
+
+  .mobile-leaderboard-fix th {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 5px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .mobile-leaderboard-fix th:first-child {
+    width: 20%;
+  }
+  .mobile-leaderboard-fix th:nth-child(2) {
+    width: 55%;
+  }
+  .mobile-leaderboard-fix th:last-child {
+    width: 25%;
+  }
+
+  /* Style the table body */
+  .mobile-leaderboard-fix tbody {
+    display: block;
+    width: 100%;
+  }
+
+  /* Style each row */
+  .mobile-leaderboard-fix tbody tr {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Alternating row backgrounds */
+  .mobile-leaderboard-fix tbody tr:nth-child(odd) {
+    background-color: var(--card-background-darker);
+  }
+
+  .mobile-leaderboard-fix tbody tr:nth-child(even) {
+    background-color: var(--card-background);
+  }
+
+  /* Style for the highlighted row */
+  .mobile-leaderboard-fix tbody tr.my-row {
+    background-color: rgba(74, 144, 226, 0.2);
+  }
+
+  /* Style the table cells */
+  .mobile-leaderboard-fix tbody td {
+    display: flex;
+    align-items: center;
+    padding: 10px 5px;
+    border: none;
+  }
+
+  .mobile-leaderboard-fix tbody td:first-child {
+    width: 20%;
+    justify-content: center;
+  }
+
+  .mobile-leaderboard-fix tbody td:nth-child(2) {
+    width: 55%;
+    justify-content: flex-start;
+  }
+
+  .mobile-leaderboard-fix tbody td:last-child {
+    width: 25%;
+    justify-content: center;
+  }
+
+  /* Nickname cell specific styling */
+  .mobile-leaderboard-fix .nickname-cell {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4px;
+    overflow: hidden;
+    width: 55%;
+  }
+
+  .mobile-leaderboard-fix .player-icon {
+    display: flex;
+    flex-shrink: 0;
+    margin-right: 4px;
+  }
+
+  .mobile-leaderboard-fix .player-nickname {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mobile-leaderboard-fix .winner-indicator {
+    flex-shrink: 0;
+    margin-left: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Adjust padding for smaller screens */
+  .mobile-leaderboard-fix td,
+  .mobile-leaderboard-fix th {
+    padding: 8px 3px;
+  }
+
+  /* Ensure proper spacing on very small screens */
+  .mobile-leaderboard-fix .nickname-cell {
+    gap: 2px;
+  }
+
+  .mobile-leaderboard-fix .player-icon {
+    margin-right: 2px;
+    font-size: 0.9em;
+  }
+
+  .mobile-leaderboard-fix .winner-indicator {
+    margin-left: 2px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 375px) {
+  .mobile-leaderboard-fix td,
+  .mobile-leaderboard-fix th {
+    padding: 6px 2px;
+    font-size: 0.9em;
+  }
+}
+
+.nickname-cell {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+@media (max-width: 480px) {
+  .nickname-cell {
+    padding: 6px 4px;
+    gap: 2px;
+  }
+
+  /* Adjust leaderboard colors for better contrast on mobile */
+  .leaderboard-table {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
+  .leaderboard-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+  }
+
+  /* Add zebra striping for better readability */
+  .leaderboard-table tbody tr:nth-child(odd):not(.my-row) {
+    background-color: var(--card-background-darker);
+  }
+
+  .leaderboard-table tbody tr:nth-child(even):not(.my-row) {
+    background-color: var(--card-background);
+  }
+
+  /* Make the highlighted row more visible */
+  .my-row td {
+    background-color: rgba(74, 144, 226, 0.2);
+  }
+}

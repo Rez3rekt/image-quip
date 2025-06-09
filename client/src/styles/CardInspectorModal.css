@@ -1,0 +1,333 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.modal-content {
+  background-color: var(--background-color);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  width: 700px; /* Adjust as needed */
+  border: 1px solid var(--border-color);
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 5px;
+  line-height: 1;
+}
+.modal-close-button:hover {
+  color: var(--text-color);
+}
+
+/* --- Navigation Arrow Styles --- */
+.modal-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+  z-index: 10;
+  /* Flexbox centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-nav-button:active {
+  transform: translateY(-50%) scale(0.95); /* Slightly scale down when active */
+  /* Optionally adjust background slightly */
+  /* background-color: rgba(0, 0, 0, 0.6); */
+}
+
+.modal-nav-button:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-nav-button:disabled {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+}
+
+.modal-nav-button.prev {
+  /* Position relative to viewport center minus half modal width minus offset */
+  left: calc(50vw - 350px - 50px); /* Set offset back to 50px */
+}
+
+.modal-nav-button.next {
+  /* Position relative to viewport center plus half modal width plus offset */
+  right: calc(50vw - 350px - 50px); /* Set offset back to 50px */
+}
+/* --- End Navigation Arrow Styles --- */
+
+.modal-content h3 {
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: var(--font-family-display);
+}
+
+.inspector-content {
+  display: flex;
+  gap: 25px;
+}
+
+.inspector-image-container {
+  flex-basis: 40%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  aspect-ratio: 9 / 16;
+  background-color: var(--background-color);
+  cursor: pointer;
+  transform-style: preserve-3d;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  padding: 10px;
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+}
+
+.flip-card-front {
+  background-color: var(--background-color);
+}
+
+.flip-card-back {
+  background-color: var(--card-back-color, #334);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 10px; /* Add padding for text */
+}
+
+.card-back-logo {
+  font-size: 2em;
+  font-weight: bold;
+  font-family: var(--font-family-display);
+  text-align: center; /* <<< Center the text */
+  width: 100%; /* <<< Ensure span takes full width */
+  line-height: 1.1; /* Adjust line height if needed */
+}
+
+.inspector-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: default;
+  display: block;
+}
+
+.inspector-details {
+  flex-basis: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-section {
+  border-bottom: 1px solid var(--border-color-light);
+  padding-bottom: 15px;
+}
+.detail-section:last-of-type {
+  border-bottom: none;
+}
+
+.detail-section label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color-secondary);
+  font-family: var(--font-family-sans);
+}
+
+.detail-section input[type='text'] {
+  width: 100%;
+  padding: 8px;
+}
+
+.tags-display {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.tags-display em {
+  color: var(--text-color-secondary);
+  width: 100%; /* Ensure message takes full width */
+  font-style: italic;
+  font-family: var(--font-family-sans);
+}
+
+.tag-item {
+  background-color: var(--accent-color-secondary);
+  color: var(--accent-color-text);
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.9em;
+  display: inline-flex; /* Align button vertically */
+  align-items: center;
+  gap: 4px;
+}
+
+.remove-tag-button {
+  background: none;
+  border: none;
+  color: var(--accent-color-text);
+  cursor: pointer;
+  padding: 0;
+  margin-left: 2px;
+  font-size: 1.1em;
+  line-height: 1;
+  opacity: 0.7;
+}
+.remove-tag-button:hover {
+  opacity: 1;
+  color: var(--error-color); /* Make it red on hover */
+}
+
+.tags-input {
+  display: flex;
+  gap: 5px;
+}
+
+.tags-input input {
+  flex-grow: 1;
+}
+
+/* Target the p tag more specifically */
+.inspector-details .detail-section p {
+  margin: 0;
+  /* color: var(--text-secondary); */ /* Original */
+  color: var(--text-color-secondary) !important; /* Force color */
+  font-family: var(--font-family-sans);
+}
+
+.modal-save-button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  align-self: center; /* Center button */
+}
+
+/* <<< Add Mobile Styles >>> */
+@media (max-width: 480px) {
+  .modal-content {
+    width: auto; /* Let content + max-width define width */
+    margin: 10px; /* Add space from viewport edges */
+    max-width: 400px;
+    padding: 15px;
+    max-height: calc(100vh - 20px); /* Ensure modal fits vertically */
+    box-sizing: border-box; /* Include padding in dimensions */
+  }
+
+  .inspector-content {
+    flex-direction: column; /* Stack vertically */
+    gap: 15px; /* Adjust gap for vertical layout */
+  }
+
+  .inspector-image-container {
+    flex-basis: auto; /* Remove fixed basis */
+    max-width: 200px; /* Limit image width */
+    width: 60%; /* Adjust width relative to container */
+    margin: 0 auto 10px auto; /* Center image and add bottom margin */
+    min-height: 150px; /* Reduce min height */
+  }
+
+  .inspector-details {
+    flex-basis: auto; /* Remove fixed basis */
+    gap: 15px; /* Adjust gap within details */
+  }
+
+  .detail-section {
+    padding-bottom: 10px;
+  }
+
+  .detail-section label {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+  }
+
+  .detail-section input[type='text'],
+  .tags-input input {
+    padding: 6px;
+    font-size: 0.9em;
+    box-sizing: border-box; /* Ensure padding included in width */
+    max-width: 100%; /* Prevent explicit overflow */
+  }
+
+  .tags-display {
+    margin-bottom: 5px;
+  }
+
+  .tag-item {
+    font-size: 0.8em;
+    padding: 2px 6px;
+  }
+
+  .tags-input button {
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+
+  .modal-save-button {
+    padding: 10px 15px;
+    font-size: 1em;
+  }
+
+  /* Hide navigation arrows on small screens */
+  .modal-nav-button {
+    display: none;
+  }
+}

@@ -1,0 +1,1042 @@
+/* Styles for MyCardsScreen.js */
+
+.my-cards-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.back-button {
+  align-self: flex-start; /* Position button to the left */
+  margin-bottom: 10px; /* Add some space below */
+  padding: 8px 15px;
+  font-size: 14px;
+}
+
+.card-upload-section {
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  border-radius: var(--border-radius);
+  width: 90%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Increased gap */
+}
+
+/* Cropper specific styles */
+.crop-container-wrapper {
+  width: 100%;
+  background-color: #333;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column; /* Stack crop area and button */
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: var(--border-radius);
+}
+
+.crop-container {
+  width: 100%;
+  background-color: #333;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: var(--border-radius);
+}
+
+.cropper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-color: #222;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* react-easy-crop styles */
+.ReactCrop {
+  max-width: 100%; /* Ensure it doesn't overflow */
+  max-height: 400px; /* Limit visual height */
+}
+
+.ReactCrop img {
+  max-height: 400px; /* Constrain the image display size */
+}
+
+.crop-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px; /* Add some space */
+}
+
+.crop-controls label {
+  margin-right: 5px;
+  color: white; /* Make label visible */
+}
+
+.crop-controls input[type='range'] {
+  width: 150px; /* Adjust width */
+}
+
+.save-card-button,
+.save-gif-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.save-card-button:hover:not(:disabled),
+.save-gif-button:hover:not(:disabled) {
+  background-color: var(--button-primary-hover-bg);
+}
+
+.save-card-button:disabled,
+.save-gif-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Styles for GIF Preview */
+.gif-preview-container {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px dashed var(--border-color); /* Dashed border for GIF preview */
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;
+  gap: 10px;
+}
+
+.gif-preview-image {
+  max-width: 150px; /* Limit preview size */
+  max-height: 200px; /* Limit preview size */
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.gif-preview-container p {
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--text-secondary);
+}
+
+/* --- Deck Section Styles --- */
+.decks-section {
+  width: 90%;
+  max-width: 800px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.deck-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.deck-item {
+  gap: 10px;
+  /* Change flex-direction to column */
+  flex-direction: column;
+  /* Remove default align-items if stacking vertically */
+  /* align-items: center; */
+  cursor: default; /* Remove cursor from main item */
+  /* Remove padding from item itself, apply within children */
+  padding: 0;
+  /* Set width to match card width */
+  width: 110px;
+  /* Change box-sizing */
+  box-sizing: border-box;
+  background-color: var(--input-background);
+  border-radius: var(--border-radius);
+  /* Remove border from item, apply to children on select */
+  /* border: 2px solid transparent; */
+}
+
+/* Style the new header */
+.deck-item-header {
+  display: flex;
+  justify-content: space-between; /* Push name and button apart */
+  align-items: center;
+  width: 100%; /* Take full width of parent (110px) */
+  padding: 5px; /* Padding inside header */
+  box-sizing: border-box; /* Include padding in width */
+  border-radius: var(--border-radius) var(--border-radius) 0 0; /* Match top radius */
+  cursor: pointer; /* Make header clickable for selection */
+  transition: background-color 0.2s ease;
+}
+
+.deck-item-header.selected {
+  /* Apply border to header */
+  border: 2px solid var(--accent-color);
+  /* Ensure bottom border doesn't show */
+  border-bottom-color: transparent;
+  /* Adjust padding slightly to account for border */
+  padding: 3px;
+  background-color: var(--selected-item-bg);
+}
+.deck-item-header:not(.selected):hover {
+  background-color: var(--button-hover-bg);
+}
+
+.deck-name {
+  /* font-weight: bold; <-- Ensure this is removed or overridden */
+  font-weight: normal; /* <<< Explicitly set normal weight */
+  font-family: var(--font-family-sans); /* <<< Explicitly set sans-serif font */
+  flex-grow: 0; /* Don't grow */
+  cursor: pointer; /* Make name clickable */
+  white-space: nowrap;
+  overflow: hidden; /* Ensure outer span clips */
+  text-overflow: ellipsis; /* Apply ellipsis when not hovered/scrolling */
+  color: var(--text-color);
+}
+
+/* Inner span for the actual text content and animation */
+.deck-name-inner {
+  display: inline-block; /* Allows transform */
+  white-space: nowrap; /* Keep text on one line */
+}
+
+/* Scrolling animation for long deck names */
+@keyframes scroll-text {
+  0% {
+    transform: translateX(0);
+  }
+  /* Attempt to only scroll left if there is significant overflow */
+  /* calc(-100% + 80px) might be positive for short strings */
+  /* Use min() to cap translation at 0 if calculation is positive */
+  100% {
+    transform: translateX(min(0px, calc(-100% + 75px)));
+  } /* Adjust 75px if needed */
+}
+
+/* Apply animation to INNER span on PARENT hover */
+.deck-item-header:hover .deck-name .deck-name-inner {
+  text-overflow: clip; /* Remove ellipsis during animation */
+  /* Slower, alternating scroll */
+  animation: scroll-text 6s linear infinite alternate;
+}
+
+/* Remove the old hover rule targeting .deck-name directly */
+/* .deck-item-header:hover .deck-name { ... } */
+
+.delete-deck-button {
+  /* Reset styles */
+  background: none;
+  border: none;
+  color: var(--error-color);
+  cursor: pointer;
+  padding: 0;
+  margin-left: 5px; /* Space from name */
+  opacity: 0.6;
+  font-size: 14px; /* Adjust size */
+  line-height: 1;
+  font-weight: bold;
+  width: 18px; /* Make it squarish/circular */
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.delete-deck-button:hover {
+  opacity: 1;
+  background-color: rgba(var(--error-color-rgb), 0.2);
+}
+
+/* Deck Preview Container - Below Header */
+.deck-preview-image-container {
+  position: relative;
+  width: 100%;
+  /* Calculate height based on 9:16 aspect ratio */
+  /* Assuming parent width is the key driver, use padding-bottom trick or aspect-ratio */
+  aspect-ratio: 9 / 16;
+  background-color: #444; /* Placeholder background */
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.deck-preview-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 9 / 16; /* Match the image container */
+  min-height: 100px; /* Ensure a minimum size even if aspect-ratio fails */
+  background-color: #383842; /* Slightly different bg for empty */
+  color: #a0a0b0;
+  font-size: 0.9em;
+  border-radius: 4px;
+  text-align: center;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+/* Wrapper for positioning during transition - Keep for now, might not be needed without transition */
+.deck-image-transition-wrapper {
+  /* position: absolute; */ /* No longer needed? */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Remove react-transition-group classes --- */
+/* .fade-cross-enter { ... } */
+/* .fade-cross-enter-active { ... } */
+/* .fade-cross-exit { ... } */
+/* .fade-cross-exit-active { ... } */
+
+.deck-preview-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the area, cropping if needed */
+}
+
+/* Style for the card count overlay */
+.deck-preview-count {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px; /* Smaller font */
+  font-weight: bold;
+}
+
+/* Keep selection styling */
+.deck-item-header.selected + .deck-preview-image-container {
+  border: 2px solid var(--accent-color);
+  border-top-color: transparent;
+}
+
+.create-deck-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.create-deck-form input {
+  flex-grow: 1;
+  padding: 8px 10px;
+}
+
+.create-deck-form button {
+  padding: 8px 15px;
+}
+
+/* --- Card Collection Modifications --- */
+.card-collection-section {
+  width: 90%;
+  max-width: 800px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+/* Apply to the container div we added in MyCardsScreen.js */
+.virtualized-card-grid-container {
+  /* Inherit width, height is set inline */
+}
+
+/* Apply to the grid component itself if needed */
+.virtualized-card-grid {
+  /* Custom scrollbar styles (optional) */
+  /* Example for Webkit browsers */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--input-background);
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border-color-light);
+    border-radius: 4px;
+    border: 2px solid var(--input-background); /* Creates padding around thumb */
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--border-color);
+  }
+}
+
+.deck-selection-info {
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  text-align: center;
+  margin: 7.5px;
+  /* Standard styles */
+  position: relative;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  /* Remove fixed width/height - let grid control size */
+  /* width: 110px; */
+  /* aspect-ratio: 9 / 16; */
+  /* height: calc(110px * 16 / 9); */
+}
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.card-item-wrapper {
+  /* Sizing */
+  flex-basis: 110px;
+  height: calc(110px * (16 / 9));
+  box-sizing: border-box;
+  /* Spacing */
+  margin: 7.5px;
+  /* Standard styles */
+  position: relative;
+  /* background-color: var(--card-bg); /* REMOVE background from wrapper */
+  border-radius: var(--border-radius);
+  border-width: 3px;
+  border-style: solid;
+  border-color: transparent; /* Default transparent, overridden by classes */
+  background-clip: padding-box;
+  padding: 0; /* <<< REMOVE any padding from wrapper if added */
+  overflow: hidden; /* <<< Add overflow hidden */
+  touch-action: none;
+}
+
+/* Restore conditional border color */
+.card-item-wrapper.in-deck {
+  border-color: var(--success-color);
+}
+
+/* Make card clickable only when a deck is selected */
+.card-item-wrapper[title^='Add'],
+.card-item-wrapper[title^='Remove'] {
+  cursor: pointer;
+}
+.card-item-wrapper[title='Deck full'] {
+  cursor: not-allowed;
+}
+
+.card-item {
+  position: relative; /* Keep relative if needed for buttons */
+  /* border: 1px solid var(--border-color); /* <<< REMOVE inner border */
+  border-radius: 0; /* <<< REMOVE inner radius */
+  /* padding: 5px; /* <<< REMOVE inner padding */
+  background-color: var(--input-background); /* Keep background color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* <<< Ensure full width */
+  height: 100%; /* <<< Ensure full height */
+  overflow: hidden;
+}
+
+.card-item img {
+  display: block;
+  /* Ensure image tries to cover the area */
+  /* Let object-fit handle aspect ratio */
+  width: 100%; /* Uncomment */
+  height: 100%; /* Uncomment */
+  object-fit: cover; /* Uncomment */
+  /* max-width: 100%; */ /* Remove */
+  /* max-height: 100%; */ /* Remove */
+  border-radius: 4px;
+}
+
+.delete-card-button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background-color: rgba(220, 53, 69, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  z-index: 1; /* Ensure it's above deck indicator */
+}
+
+.delete-card-button:hover {
+  opacity: 1;
+  background-color: rgba(220, 53, 69, 1);
+}
+
+.deck-indicator {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.2s ease;
+  z-index: 0;
+}
+
+/* Show indicator when deck is selected */
+.card-item-wrapper:hover .deck-indicator,
+.card-item-wrapper.in-deck .deck-indicator {
+  opacity: 0.85;
+}
+
+.deck-indicator.in-deck {
+  background-color: var(--success-color); /* Green check */
+}
+.deck-indicator.not-in-deck {
+  background-color: var(--accent-color); /* Blue plus */
+}
+.deck-indicator.full {
+  background-color: var(--error-color); /* Red dash */
+}
+
+.error-message {
+  color: var(--error-color);
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* Styles for the separated deck/available card sections */
+.selected-deck-cards-section,
+.available-cards-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--border-color); /* Separator line */
+  width: 100%;
+}
+
+.selected-deck-cards-section h4,
+.available-cards-section h4 {
+  text-align: center;
+  /* color: var(--text-secondary); */ /* <<< Change color */
+  color: var(--text-color); /* <<< Use main text color */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  font-family: var(--font-family-sans); /* <<< Add font family */
+}
+
+.deck-action-hint {
+  /* color: var(--text-muted); */ /* <<< Change color */
+  color: var(--text-color-secondary); /* <<< Use secondary text color */
+  font-size: 0.8em;
+  font-style: italic;
+  font-weight: normal;
+  font-family: var(--font-family-sans); /* <<< Add font family */
+}
+
+/* Ensure the deck full state is clear */
+.card-item-wrapper.deck-full {
+  cursor: not-allowed;
+  opacity: 0.7; /* Slightly fade cards that cannot be added */
+}
+
+.card-item-wrapper.deck-full:hover .deck-indicator.not-in-deck {
+  opacity: 0; /* Hide the '+' indicator on hover if deck is full */
+}
+
+.card-item-wrapper.deck-full .deck-indicator.full {
+  opacity: 0.85; /* Ensure the '-' indicator is visible */
+}
+
+.error-message {
+  color: var(--error-color);
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* Drag and Drop Styles */
+
+/* Container for droppable area - Ensure it aligns with flexbox */
+.card-grid-droppable {
+  /* Inherits display: flex; flex-wrap: wrap; from .card-grid */
+  padding: 10px;
+  min-height: 150px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+  border-radius: var(--border-radius);
+  position: relative;
+}
+
+/* Style for the placeholder occupying the original spot */
+.card-grid-droppable > div[data-rbd-placeholder-context-id] {
+  flex-basis: 110px;
+  height: calc(110px * 16 / 9);
+  box-sizing: border-box;
+  margin: 7.5px;
+  border: 2px dashed rgba(var(--text-muted-rgb), 0.5); /* Restore better placeholder */
+  border-radius: var(--border-radius);
+  background-color: rgba(var(--text-muted-rgb), 0.1);
+}
+
+/* Style for when dragging OVER a droppable area */
+/* This is the standard dnd-kit style for isOver */
+.card-grid-droppable.dragging-over {
+  /* background-color: rgba(var(--accent-color-rgb), 0.1); */ /* Keep this subtle or remove */
+  /* outline: 1px dashed rgba(var(--accent-color-rgb), 0.5); */
+  /* outline-offset: -5px; */
+}
+
+/* Make sure original deck indicators are hidden when dragging */
+.card-item-wrapper.is-dragging .deck-indicator {
+  opacity: 0 !important;
+}
+
+/* Ensure cursor indicates grabbing */
+.card-item-wrapper[data-rbd-draggable-context-id] {
+  cursor: grab;
+}
+.card-item-wrapper[data-rbd-draggable-context-id]:active {
+  cursor: grabbing;
+}
+
+/* Style adjustments for deck full state */
+.card-item-wrapper.deck-full {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.card-grid-droppable.destination-deck-full {
+  /* Maybe add a visual cue that this drop zone won't accept items? */
+  /* e.g., slight red glow or different background */
+  /* background-color: rgba(255, 0, 0, 0.05); */
+}
+
+/* Hide the '+' indicator on hover if deck is full */
+.card-item-wrapper.deck-full:hover .deck-indicator.not-in-deck {
+  opacity: 0;
+}
+
+/* Ensure the '-' indicator is visible when deck full */
+.card-item-wrapper.deck-full .deck-indicator.full {
+  opacity: 0.85;
+}
+
+/* Style for the placeholder item injected during drag */
+.card-item-wrapper.placeholder-item {
+  background-color: rgba(var(--text-muted-rgb), 0.1);
+  border: 2px dashed rgba(var(--text-muted-rgb), 0.5);
+  /* Ensure it takes up same space as a normal card */
+  flex-basis: 110px;
+  height: calc(110px * 16 / 9);
+  box-sizing: border-box;
+  margin: 7.5px;
+  border-radius: var(--border-radius);
+  /* Remove content visibility if any */
+  opacity: 1 !important; /* Make sure placeholder is visible */
+  z-index: auto !important;
+}
+
+.card-item-wrapper.placeholder-item > * {
+  visibility: hidden; /* Hide any potential children */
+}
+
+/* Ensure no other transitions are applied that could conflict */
+
+/* Add styles for deck preview images */
+.deck-preview-image-container {
+  /* Ensure full width of parent (deck-item) */
+  width: 100%;
+  /* Use aspect-ratio to determine height */
+  aspect-ratio: 9 / 16;
+  /* REMOVE incorrect/conflicting fixed dimensions and inline spacing */
+  /* height: 25px; */
+  /* width: calc(25px * 9 / 16); */
+  /* margin-left: 10px; */
+  /* margin-right: 5px; */
+  /* flex-shrink: 0; */
+
+  /* Keep necessary styles */
+  position: relative; /* Needed for absolute positioning of children */
+  overflow: hidden;
+  /* Remove direct animation */
+  /* animation: fade-in 3s ease-out; */
+  border-radius: 0 0 var(--border-radius) var(--border-radius); /* Round bottom corners */
+  cursor: pointer; /* Make image clickable */
+  border: none; /* No border by default */
+  box-sizing: border-box;
+  margin: 0; /* Ensure no extra margins */
+}
+
+.deck-preview-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the area, cropping if needed */
+}
+
+/* Make card collection heading clickable */
+.clickable-heading {
+  cursor: pointer;
+}
+.clickable-heading:hover {
+  text-decoration: underline;
+}
+
+.deck-item-container {
+  position: relative; /* Needed for absolute positioning of children */
+  /* Inherit other styles from .deck-item if needed, or combine classes */
+}
+
+.delete-deck-button {
+  position: absolute;
+  top: 2px; /* Adjust as needed */
+  right: 2px; /* Adjust as needed */
+  z-index: 5; /* Ensure it's above the header/image */
+  background-color: rgba(40, 40, 40, 0.7);
+  color: #eee;
+  border: 1px solid #555;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 18px; /* Center the X */
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+}
+
+.delete-deck-button:hover {
+  background-color: rgba(200, 50, 50, 0.8);
+  color: white;
+}
+
+/* --- Card Border Styles based on Votes --- */
+
+/* Keyframes for holographic effect */
+@keyframes holographicShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Default border when selected */
+.card-item-wrapper.in-deck {
+  border-color: var(--success-color) !important; /* Add !important to override vote borders */
+}
+
+/* Vote Borders (Override default/in-deck unless holographic) */
+.card-item-wrapper.border-bronze {
+  border-color: #cd7f32;
+}
+.card-item-wrapper.border-silver {
+  border-color: #c0c0c0;
+}
+.card-item-wrapper.border-gold {
+  border-color: #ffd700;
+}
+
+/* Holographic Border - Most specific */
+.card-item-wrapper.border-holographic {
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    90deg,
+    #ff0000,
+    #ff7f00,
+    #ffff00,
+    #00ff00,
+    #0000ff,
+    #4b0082,
+    #8f00ff
+  );
+  background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff)
+    padding-box; /* Apply gradient to padding-box */
+  background-size: 400% 400%;
+  animation: holographicShine 8s linear infinite;
+  /* Override in-deck color */
+  border-color: transparent; /* Use border-image instead */
+}
+
+/* Green border for selected deck (Needs higher specificity or !important?) */
+.card-item-wrapper.border-holographic.in-deck {
+  /* Allow holo to override green */
+  border-color: transparent !important; /* Keep holo border */
+}
+
+/* <<< Style for the empty deck hint text >>> */
+.empty-deck-hint {
+  color: var(--text-color-secondary);
+  font-family: var(--font-family-sans);
+  font-style: italic;
+  text-align: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.error-message {
+  color: var(--error-color);
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* --- Responsive Adjustments for My Cards Grid --- */
+@media (max-width: 768px) {
+  .card-item-wrapper {
+    /* Remove conflicting size declarations for virtualized grid */
+    /* flex-basis: 100px; */
+    /* height: calc(100px * 16 / 9); */
+    margin: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .deck-item {
+    width: 75px; /* Adjust deck item width for ~4 columns */
+  }
+
+  .card-item-wrapper {
+    /* Remove conflicting size declarations for virtualized grid */
+    /* flex-basis: 70px; */
+    /* height: calc(70px * 16 / 9); */
+    margin: 5px;
+  }
+}
+/* --- End Responsive Adjustments --- */
+
+/* <<< ADDED: Reset spacing for items inside virtualized grid >>> */
+.virtualized-card-grid .card-item-wrapper {
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+  width: 100%; /* Fill the cell width */
+  height: 100%; /* Fill the cell height */
+  border: none; /* Remove border if it exists */
+  /* Let the inner .card-item handle background/border if needed */
+}
+
+/* Restore conditional border color */
+.card-item-wrapper.in-deck {
+  border-color: var(--success-color);
+}
+
+/* Card creation action buttons */
+.card-creation-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.card-creation-actions button {
+  padding: 8px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.card-creation-actions button:first-child {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.card-creation-actions button:first-child:hover {
+  background-color: var(--button-primary-hover-bg);
+}
+
+.card-creation-actions .cancel-button {
+  background-color: var(--input-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.card-creation-actions .cancel-button:hover {
+  background-color: var(--button-secondary-hover-bg);
+}
+
+.card-creation-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Mobile camera button styles */
+.mobile-upload-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.camera-capture-btn {
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.camera-capture-btn:hover:not(:disabled) {
+  background-color: var(--button-primary-hover-bg);
+}
+
+.camera-capture-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Make sure input styling is improved for mobile */
+.standard-file-input {
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+/* Media queries for responsive design */
+@media (min-width: 768px) {
+  .mobile-upload-options {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .camera-capture-btn {
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .standard-file-input {
+    margin-bottom: 0;
+    flex-grow: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .crop-container {
+    margin: 0 -15px; /* Extend beyond container on very small screens */
+    width: calc(100% + 30px);
+  }
+
+  .zoom-slider-container {
+    padding: 0 15px;
+  }
+
+  /* Make buttons larger for touchscreens */
+  .card-creation-actions button {
+    padding: 12px 20px;
+    font-size: 16px;
+    min-height: 48px; /* Ensure good tap target size */
+  }
+
+  /* Ensure the card grid has proper spacing */
+  .cards-grid {
+    gap: 10px;
+    padding: 10px;
+    justify-content: space-between;
+  }
+
+  .cards-grid .image-card-wrapper {
+    flex: 1 0 120px; /* Adjust flex-basis for mobile */
+    max-width: 150px; /* Ensure no wrapping within small mobile screens */
+  }
+}
+
+/* Loading and Deleting States */
+.card-item-wrapper.deleting {
+  opacity: 0.5;
+  pointer-events: none;
+  position: relative;
+}
+
+.card-item-wrapper.deleting::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(220, 53, 69, 0.1);
+  border: 2px solid rgba(220, 53, 69, 0.3);
+  border-radius: var(--border-radius);
+  z-index: 10;
+}
+
+.deck-item.deleting {
+  opacity: 0.5;
+  pointer-events: none;
+  position: relative;
+}
+
+.deck-item.deleting::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(220, 53, 69, 0.1);
+  border: 2px solid rgba(220, 53, 69, 0.3);
+  border-radius: var(--border-radius);
+  z-index: 10;
+}
+
+/* Adjust LoadingButton styles for delete buttons */
+.delete-card-button.loading-button,
+.delete-deck-button.loading-button {
+  min-width: 20px;
+  min-height: 20px;
+  padding: 0;
+  font-size: 10px;
+}
+
+.delete-card-button.loading-button .loading-button-content,
+.delete-deck-button.loading-button .loading-button-content {
+  gap: 2px;
+}
+
+.delete-card-button.loading-button .loading-spinner,
+.delete-deck-button.loading-button .loading-spinner {
+  width: 10px;
+  height: 10px;
+  border-width: 1px;
+}
