@@ -1,11 +1,11 @@
 /* styles/PromptScreen.css */
 
 .prompt-screen-container {
-  padding: 20px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
   /* background-color: var(--card-background); /* Optional dark bg */
 }
 
@@ -26,7 +26,7 @@
 
 /* Base styles for prompt box (applies to both modes) */
 .current-prompt-box {
-  padding: 15px;
+  padding: 8px;
   border: none;
   border-radius: 0;
   background-color: transparent;
@@ -59,7 +59,7 @@
 
 .current-prompt-box p {
   margin: auto;
-  font-size: 1.5em; /* Slightly smaller than original 1.8em */
+  font-size: 1.2em; /* Reduced for more compact layout */
   font-weight: bold;
   font-family: var(--font-family-sans);
   text-align: center;
@@ -68,25 +68,26 @@
 
 .hand-display-area {
   width: 95%;
-  margin-top: 15px;
+  margin-top: 8px;
 }
 
 .hand-title {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   font-weight: bold;
+  font-size: 1rem;
 }
 
 .hand-images-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
-  padding: 15px;
+  gap: 8px;
+  padding: 8px;
   background: var(--input-background); /* Dark background */
   border-radius: 5px;
   border: 1px solid var(--border-color);
-  min-width: 730px; /* <<< Add min-width to prevent shrinking */
+  /* Remove min-width to allow more compact layout */
 }
 
 .deck-count-indicator {
