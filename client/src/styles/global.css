@@ -819,17 +819,17 @@ ul {
 div.current-prompt-box,
 .current-prompt-box {
   border: none !important;
-  width: 360px !important;
-  height: 640px !important; /* More reasonable size */
-  border-radius: 12px !important;
-  background-color: var(--card-background) !important;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
   margin: 0 auto !important;
-  padding: 0 !important; /* Remove padding to match image cards */
-  overflow: hidden !important;
+  padding: 15px !important;
+  overflow: visible !important;
 }
 
 /* --- End Prompt Screen Styles --- */
