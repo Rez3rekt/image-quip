@@ -132,6 +132,8 @@ public
 *.sqlite
 *.sqlite3
 *.db
+*.sqlite-shm
+*.sqlite-wal
 
 # OS generated files
 .DS_Store
