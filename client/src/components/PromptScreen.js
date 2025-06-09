@@ -257,35 +257,29 @@ function PromptScreen({ gameState, socket, currentPlayerId }) {
           <p className='waiting-message'>All players have finished!</p>
         )}
 
-        {/* --- Player Status List --- */}
+        {/* --- Player Status Icons (Simplified) --- */}
         {playersArray.length > 0 && (
-          <>
+          <div className='player-status-icons-container'>
             <h4>Submission Status:</h4>
-            <ul className='player-status-list'>
+            <div className='player-status-icons'>
               {playersArray.map(player => {
-                // <<< FIX: Use the expected total >>>
-                // const totalPrompts = player.myAssignedPrompts?.length || gameState.settings?.promptsPerPlayer || 0; // REMOVE OLD LOGIC
-                const totalPrompts = totalPromptsExpected; // USE CORRECT TOTAL
+                const totalPrompts = totalPromptsExpected;
                 const answeredCount = player.promptsAnsweredCount ?? 0;
-                // <<< END FIX >>>
+                const isComplete = answeredCount >= totalPrompts;
                 const isCurrentUser = player.id === currentPlayerId;
-                const statusText = `${answeredCount} / ${totalPrompts} Submitted`;
+                
                 return (
-                  <li
+                  <div
                     key={player.id}
-                    className={`player-status-item ${isCurrentUser ? 'current-user' : ''}`}
+                    className={`player-status-icon ${isComplete ? 'completed' : 'pending'} ${isCurrentUser ? 'current-user' : ''}`}
+                    title={`${player.nickname}${isCurrentUser ? ' (You)' : ''}: ${answeredCount}/${totalPrompts} submitted`}
                   >
                     <span className='player-icon'>{player.icon || '😀'}</span>
-                    <span className='player-name'>
-                      {player.nickname}
-                      {isCurrentUser ? ' (You)' : ''}:
-                    </span>
-                    <span className='status-text'>{statusText}</span>
-                  </li>
+                  </div>
                 );
               })}
-            </ul>
-          </>
+            </div>
+          </div>
         )}
       </div>
     );
@@ -316,64 +310,63 @@ function PromptScreen({ gameState, socket, currentPlayerId }) {
         <h2 className='prompt-progress-text'>Your Prompt {progressText}:</h2>
         {error && <p className='prompt-error'>{error}</p>}
 
-        {/* Mobile: Horizontal layout for prompt + drop zone */}
-        <div className='mobile-prompt-and-drop'>
-          {/* Original Prompt Display Area */}
-          <div className='prompt-display-area'>
-            <div className={`current-prompt-box ${isFlipTheScript ? 'flip-script-mode' : ''}`}>
-              {/* Show only the prompt here */}
-              {isFlipTheScript ? (
-                <img
-                  src={`${SERVER_BASE_URL}${currentPromptIdentifier}`}
-                  alt='Prompt Image'
-                  className='prompt-image'
-                  style={{
-                    display: 'block',
-                    width: '170px',
-                    height: 'auto',
-                    objectFit: 'contain',
-                    borderRadius: '8px',
-                    boxShadow: '0 6px 16px rgba(0, 0, 0, 0.4)',
-                    margin: '0',
-                  }}
-                />
-              ) : (
-                <p>{currentPromptIdentifier}</p>
-              )}
-            </div>
+        {/* Original Prompt Display Area (NOT the drop zone anymore) */}
+        <div className='prompt-display-area'>
+          <div className={`current-prompt-box ${isFlipTheScript ? 'flip-script-mode' : ''}`}>
+            {/* Show only the prompt here */}
+            {isFlipTheScript ? (
+              <img
+                src={`${SERVER_BASE_URL}${currentPromptIdentifier}`}
+                alt='Prompt Image'
+                className='prompt-image'
+                style={{
+                  display: 'block',
+                  width: '170px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  borderRadius: '8px',
+                  boxShadow: '0 6px 16px rgba(0, 0, 0, 0.4)',
+                  margin: '0',
+                }}
+              />
+            ) : (
+              <p>{currentPromptIdentifier}</p>
+            )}
+            {/* Remove cue from here */}
+            {/* {!droppedCardPath && !isFlipTheScript && ...} */}
           </div>
+        </div>
 
-          {/* Dedicated Drop Zone Area (Wrap with Droppable) */}
-          {!isFlipTheScript && (
-            <Droppable
-              id='prompt-drop-zone'
-              className={`card-drop-zone ${_isDraggingOver ? 'drag-over' : ''}`}
-            >
-              {/* <<< Wrap content in flip structure >>> */}
-              <div className='flip-card'>
-                <div
-                  className={`flip-card-inner ${isFlipping ? 'flipping' : ''}`}
-                  onTransitionEnd={handleFlipEnd} // <<< Use onTransitionEnd for CSS transitions
-                >
-                  <div className='flip-card-front'>
-                    {droppedCardPath ? (
-                      <img
-                        src={`${SERVER_BASE_URL}${droppedCardPath}`}
-                        alt='Submitted Answer'
-                        className='submitted-card-image'
-                      />
-                    ) : (
-                      <div className='drop-zone-cue'>Drop Card Here</div>
-                    )}
-                  </div>
-                  <div className='flip-card-back'>
-                    <span className='card-back-logo'>QP</span>
-                  </div>
+        {/* Dedicated Drop Zone Area (Wrap with Droppable) */}
+        {!isFlipTheScript && (
+          <Droppable
+            id='prompt-drop-zone'
+            className={`card-drop-zone ${_isDraggingOver ? 'drag-over' : ''}`}
+          >
+            {/* <<< Wrap content in flip structure >>> */}
+            <div className='flip-card'>
+              <div
+                className={`flip-card-inner ${isFlipping ? 'flipping' : ''}`}
+                onTransitionEnd={handleFlipEnd} // <<< Use onTransitionEnd for CSS transitions
+              >
+                <div className='flip-card-front'>
+                  {droppedCardPath ? (
+                    <img
+                      src={`${SERVER_BASE_URL}${droppedCardPath}`}
+                      alt='Submitted Answer'
+                      className='submitted-card-image'
+                    />
+                  ) : (
+                    <div className='drop-zone-cue'>Drop Card Here</div>
+                  )}
+                </div>
+                <div className='flip-card-back'>
+                  <span className='card-back-logo'>QP</span>
                 </div>
               </div>
-            </Droppable>
-          )}
-        </div>
+            </div>
+          </Droppable>
+        )}
 
         {isFlipTheScript ? (
           <div className='response-input-area'>
@@ -460,25 +453,26 @@ function PromptScreen({ gameState, socket, currentPlayerId }) {
           </div>
         )}
 
-        <div className='player-status-list-container'>
+        <div className='player-status-icons-container'>
           <h4>Submission Status:</h4>
-          <ul className='player-status-list'>
-            {(gameState.players || []).map(p => (
-              <li
-                key={p.id}
-                className={`player-status-item ${p.id === currentPlayerId ? 'my-status' : ''}`}
-              >
-                <span className='player-icon'>{p.icon}</span>
-                <strong>
-                  {p.nickname}
-                  {p.id === currentPlayerId ? ' (You)' : ''}:
-                </strong>
-                <span>
-                  {p.promptsAnsweredCount ?? 0} / {p.promptsAssignedCount ?? 0} Submitted
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div className='player-status-icons'>
+            {(gameState.players || []).map(p => {
+              const answeredCount = p.promptsAnsweredCount ?? 0;
+              const assignedCount = p.promptsAssignedCount ?? 0;
+              const isComplete = answeredCount >= assignedCount && assignedCount > 0;
+              const isCurrentUser = p.id === currentPlayerId;
+              
+              return (
+                <div
+                  key={p.id}
+                  className={`player-status-icon ${isComplete ? 'completed' : 'pending'} ${isCurrentUser ? 'current-user' : ''}`}
+                  title={`${p.nickname}${isCurrentUser ? ' (You)' : ''}: ${answeredCount}/${assignedCount} submitted`}
+                >
+                  <span className='player-icon'>{p.icon}</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* <<< Restore DragOverlay >>> */}

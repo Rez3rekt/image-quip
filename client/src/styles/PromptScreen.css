@@ -28,19 +28,19 @@
 .current-prompt-box {
   padding: 15px;
   border: none;
-  border-radius: 12px;
-  background-color: var(--card-background);
+  border-radius: 0;
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
   color: var(--text-color);
   margin: 0 auto;
   /* Default size for text prompts (classic mode) */
-  width: 300px;
+  width: auto;
   height: auto;
-  min-height: 200px;
-  max-height: 300px;
+  min-height: auto;
+  max-height: none;
 }
 
 /* Special class for Flip the Script mode with images */
@@ -226,6 +226,86 @@
 
 .player-icon {
   font-size: 1.1rem;
+}
+
+/* New Simplified Player Status Icons */
+.player-status-icons-container {
+  width: 80%;
+  max-width: 500px;
+  margin-top: 30px;
+  border-top: 1px solid #444;
+  padding-top: 20px;
+}
+
+.player-status-icons-container h4 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.player-status-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.player-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--input-background);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.player-status-icon .player-icon {
+  font-size: 1.5rem;
+  transition: filter 0.3s ease;
+}
+
+/* Pending state - greyed out */
+.player-status-icon.pending .player-icon {
+  filter: grayscale(100%) opacity(0.4);
+}
+
+/* Completed state - full color */
+.player-status-icon.completed {
+  border-color: var(--success-color);
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.player-status-icon.completed .player-icon {
+  filter: none;
+}
+
+/* Current user highlighting */
+.player-status-icon.current-user {
+  border-color: var(--primary-color);
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+.player-status-icon.current-user.completed {
+  border-color: var(--success-color);
+  background-color: rgba(76, 175, 80, 0.2);
+}
+
+/* Hover effects */
+.player-status-icon:hover {
+  transform: scale(1.1);
+}
+
+.player-status-icon.pending:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.player-status-icon.completed:hover {
+  background-color: rgba(76, 175, 80, 0.2);
 }
 
 /* Add this important rule to override any cached styles */
@@ -450,169 +530,101 @@
   }
 }
 @media (max-width: 480px) {
-  /* --- AGGRESSIVE Mobile Optimization for No-Scroll Gameplay --- */
+  /* --- Vertical Tightening --- */
   .prompt-screen-container {
-    padding: 2px 6px; /* Minimal padding */
-    gap: 6px; /* Tight gaps between sections */
-    min-height: calc(100vh - 40px); /* Account for compact header */
-    max-height: calc(100vh - 40px); /* Ensure no overflow */
-    box-sizing: border-box;
-    overflow: hidden; /* Prevent any scrolling */
+    padding-top: 0; /* <<< Remove top padding */
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    gap: 10px;
+  }
+  .prompt-display-area {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .prompt-display-area h3 {
+    /* Target prompt progress title */
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
+  .current-prompt-box {
+    width: 220px !important;
+    max-width: 220px !important;
+    max-height: 200px !important;
+  }
+  .current-prompt-box.flip-script-mode {
+    width: 170px !important; /* Maintain fixed width on mobile */
+    max-width: 170px !important;
+    height: auto !important;
+  }
+  .current-prompt-box p {
+    font-size: 0.7em; /* <<< Reduce font size again */
+  }
+  .card-drop-zone {
+    padding: 5px;
+    min-height: 100px; /* Reduce min height */
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .hand-display-area {
+    margin-top: 2px; /* <<< Reduce space above hand area further */
+  }
+  .hand-title {
+    font-size: 1em;
+    margin-bottom: 8px;
+  }
+  /* --- End Vertical Tightening --- */
+
+  /* Further reduce card wrapper size and remove its padding/border */
+  .hand-images-grid .image-card-wrapper {
+    flex-basis: 70px; /* Try slightly smaller basis */
+    padding: 0; /* Remove wrapper padding */
+    border-width: 0; /* Remove wrapper border */
+  }
+  .hand-images-grid {
+    gap: 8px;
+    padding: 8px;
+    justify-content: flex-start; /* <<< Align items to the start on mobile */
   }
 
-  /* HIDE the progress text completely */
+  /* HIDE Prompt Progress Text */
   .prompt-progress-text {
-    display: none !important;
+    display: none;
   }
 
-  /* Create horizontal layout for prompt + drop zone */
-  .mobile-prompt-and-drop {
+  /* Match Drop Zone size to hand card size (based on inspection) */
+  .card-drop-zone {
+    width: 56px;
+    height: 100px;
+    min-height: auto;
+    padding: 0;
+    margin-top: 0; /* <<< Remove top margin */
+    margin-bottom: 0; /* <<< Remove bottom margin */
+    border: 1px dashed var(--border-color);
+    border-radius: 6px;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    overflow: hidden;
   }
-
-  /* Compact prompt display */
-  .prompt-display-area {
-    width: auto;
-    margin: 0;
-    flex-shrink: 0;
-  }
-
-  .current-prompt-box {
-    width: 140px !important;
-    max-width: 140px !important;
-    max-height: 140px !important;
-    min-height: 140px !important;
-    padding: 8px !important;
-  }
-
-  .current-prompt-box.flip-script-mode {
-    width: 120px !important;
-    max-width: 120px !important;
-    height: auto !important;
-  }
-
-  .current-prompt-box p {
-    font-size: 0.75em !important;
-    line-height: 1.1 !important;
-    margin: 0 !important;
-  }
-
-  /* Compact drop zone - same size as cards */
-  .card-drop-zone {
-    width: 140px;
-    height: 140px;
-    min-height: 140px;
-    padding: 4px;
-    margin: 0;
-    border: 2px dashed var(--border-color);
-    border-radius: 8px;
-    flex-shrink: 0;
-  }
-
+  /* Ensure drop cue text is small and doesn't interfere */
   .drop-zone-cue {
-    font-size: 0.8em;
-    text-align: center;
-    line-height: 1.2;
+    font-size: 0.7em;
+    padding: 2px; /* Minimal padding */
+    line-height: 1.1; /* Adjust line height */
   }
 
-  /* Compact hand area */
-  .hand-display-area {
-    margin: 0;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .hand-title {
-    font-size: 0.9em !important;
-    margin: 0 0 6px 0 !important;
-    text-align: center;
-  }
-
-  .deck-count-indicator {
-    font-size: 0.8em !important;
-    margin: 0 0 6px 0 !important;
-    text-align: center;
-  }
-
-  /* Optimized card grid - 5 cards in a single row */
-  .hand-images-grid {
-    gap: 6px;
-    padding: 6px;
-    justify-content: center;
-    background: transparent !important;
-    border: none !important;
-    margin: 0;
-    flex-grow: 1;
-    display: flex;
-    flex-wrap: nowrap; /* Force single row */
-    overflow-x: auto; /* Allow horizontal scroll if needed */
-  }
-
-  .hand-images-grid .image-card-wrapper {
-    width: 50px !important;
-    min-width: 50px !important;
-    flex-shrink: 0;
-    padding: 0;
-    border-width: 2px;
-    border-radius: 6px;
-  }
-
-  .hand-images-grid .image-card {
-    aspect-ratio: 9/16;
-  }
-
-  /* HIDE player status section on mobile to save space */
-  .player-status-list-container {
-    display: none !important;
-  }
-
-  /* Remove padding from flip card faces inside drop zone */
+  /* Remove padding from flip card faces inside drop zone on mobile */
   .card-drop-zone .flip-card-front,
   .card-drop-zone .flip-card-back {
-    padding: 2px;
+    padding: 0; /* <<< Remove padding */
+    /* Ensure height is constrained */
     height: 100%;
-    box-sizing: border-box;
-  }
-
-  /* Optimize Flip the Script mode */
-  .response-input-area {
-    margin: 8px 0;
-  }
-
-  .response-title {
-    font-size: 0.9em !important;
-    margin-bottom: 4px !important;
-  }
-
-  .response-textarea {
-    min-height: 40px !important;
-    font-size: 0.9em;
-    padding: 6px;
-  }
-
-  .submit-answer-button {
-    padding: 8px 16px !important;
-    font-size: 0.9rem !important;
-    margin-top: 8px !important;
+    box-sizing: border-box; /* Keep box-sizing */
   }
 }
 /* --- End Responsive Adjustments --- */
-
-/* Hide mobile wrapper on larger screens */
-@media (min-width: 481px) {
-  .mobile-prompt-and-drop {
-    display: block; /* Reset to normal layout on larger screens */
-  }
-  
-  .mobile-prompt-and-drop .prompt-display-area {
-    margin-bottom: 15px; /* Restore normal spacing */
-  }
-}
 
 /* Hand card styles */
 .hand-images-grid .image-card-wrapper {
