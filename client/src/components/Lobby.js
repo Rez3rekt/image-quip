@@ -469,7 +469,6 @@ function Lobby({ gameState, socket, playerId, isHost, error, setError, onLeaveGa
           </button>
         ) : (
           <div className='waiting-container'>
-            <LoadingSpinner size='small' />
             <p className='waiting-message'>Waiting for the host to start the game</p>
           </div>
         )}
