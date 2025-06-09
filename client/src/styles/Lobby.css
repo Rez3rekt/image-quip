@@ -139,6 +139,15 @@
   box-sizing: border-box;
 }
 
+/* Make leave button smaller and less prominent */
+.leave-lobby-button {
+  padding: 8px 16px; /* Smaller padding */
+  font-size: 0.9em;  /* Smaller font size */
+  font-family: var(--font-family-primary); /* Use regular font instead of display font */
+  width: auto; /* Don't take full width */
+  justify-self: center; /* Center in grid cell */
+}
+
 .start-button {
   background-color: var(--success-color); /* <<< ADD green background */
   color: var(--button-primary-text); /* Ensure white text */
@@ -158,15 +167,15 @@
 }
 
 .leave-lobby-button {
-  /* background-color: var(--button-primary-bg); */
-  background-color: var(--button-danger-bg); /* <<< Use Danger background */
-  color: var(--button-danger-text); /* <<< Use Danger text */
+  /* Use secondary styling instead of danger - less obnoxious */
+  background-color: var(--button-secondary-bg); /* Transparent background */
+  color: var(--button-secondary-text); /* Blue text */
+  border: 1px solid var(--button-secondary-border); /* Blue border */
 }
 
 /* Add hover state specifically for leave button */
 .leave-lobby-button:hover:not(:disabled) {
-  /* background-color: var(--button-primary-hover-bg); */
-  background-color: var(--button-danger-hover-bg); /* <<< Use Danger hover */
+  background-color: var(--button-secondary-hover-bg); /* Light blue tint on hover */
 }
 
 /* Disabled state */
