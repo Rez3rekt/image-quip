@@ -740,14 +740,16 @@ ul {
 }
 
 .hand-images-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
   padding: 5px;
   background: transparent;
   border-radius: 0;
   border: none;
+  justify-items: center;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .hand-image-wrapper {
