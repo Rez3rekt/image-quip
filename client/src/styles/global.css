@@ -318,7 +318,9 @@ ul {
 }
 
 .cancel-button {
-  background-color: #aaa;
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  border: 1px solid var(--button-secondary-border);
   font-size: 0.85rem !important;
   padding: 5px 10px !important;
   width: auto !important;
@@ -326,7 +328,7 @@ ul {
 }
 
 .cancel-button:hover {
-  background-color: #888;
+  background-color: var(--button-secondary-hover-bg);
 }
 
 /* --- Emoji Selector Styles --- */
