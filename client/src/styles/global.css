@@ -740,16 +740,22 @@ ul {
 }
 
 .hand-images-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 6px;
   padding: 5px;
   background: transparent;
   border-radius: 0;
   border: none;
-  justify-items: center;
   max-width: 500px;
   margin: 0 auto;
+}
+
+.hand-images-grid .image-card-wrapper {
+  flex-basis: calc(25% - 6px);
+  max-width: calc(25% - 6px);
+  min-width: 100px;
 }
 
 .hand-image-wrapper {
