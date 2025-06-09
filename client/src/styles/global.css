@@ -743,8 +743,8 @@ ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
-  padding: 10px;
+  gap: 8px;
+  padding: 5px;
   background: transparent;
   border-radius: 0;
   border: none;
