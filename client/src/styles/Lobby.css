@@ -113,10 +113,10 @@
   border-top: 1px solid var(--border-color-light);
   /* display: flex; */
   display: grid; /* <<< Use Grid */
-  grid-template-columns: 1fr 1fr; /* <<< Two equal columns */
+  grid-template-columns: 1fr auto; /* <<< Start button takes available space, Leave button auto-sizes */
   /* justify-content: center; <-- Not needed for grid */
   gap: 20px;
-  /* align-items: center; <-- Not needed for grid columns */
+  align-items: center; /* Vertically center the smaller leave button */
 }
 
 .start-button,
@@ -139,13 +139,14 @@
   box-sizing: border-box;
 }
 
-/* Make leave button smaller and less prominent */
+/* Make leave button much smaller and less prominent */
 .leave-lobby-button {
-  padding: 8px 16px; /* Smaller padding */
-  font-size: 0.9em;  /* Smaller font size */
+  padding: 6px 12px; /* Even smaller padding */
+  font-size: 0.8em;  /* Much smaller font size */
   font-family: var(--font-family-primary); /* Use regular font instead of display font */
   width: auto; /* Don't take full width */
   justify-self: center; /* Center in grid cell */
+  max-width: 120px; /* Limit maximum width */
 }
 
 .start-button {
@@ -167,15 +168,16 @@
 }
 
 .leave-lobby-button {
-  /* Use secondary styling instead of danger - less obnoxious */
-  background-color: var(--button-secondary-bg); /* Transparent background */
-  color: var(--button-secondary-text); /* Blue text */
-  border: 1px solid var(--button-secondary-border); /* Blue border */
+  /* Use red but more subtle than full danger styling */
+  background-color: transparent; /* Keep transparent background */
+  color: var(--error-color); /* Red text color */
+  border: 1px solid var(--error-color); /* Red border */
 }
 
 /* Add hover state specifically for leave button */
 .leave-lobby-button:hover:not(:disabled) {
-  background-color: var(--button-secondary-hover-bg); /* Light blue tint on hover */
+  background-color: var(--error-color); /* Red background on hover */
+  color: white; /* White text on hover */
 }
 
 /* Disabled state */
