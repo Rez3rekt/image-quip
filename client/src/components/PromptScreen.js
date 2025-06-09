@@ -316,63 +316,64 @@ function PromptScreen({ gameState, socket, currentPlayerId }) {
         <h2 className='prompt-progress-text'>Your Prompt {progressText}:</h2>
         {error && <p className='prompt-error'>{error}</p>}
 
-        {/* Original Prompt Display Area (NOT the drop zone anymore) */}
-        <div className='prompt-display-area'>
-          <div className={`current-prompt-box ${isFlipTheScript ? 'flip-script-mode' : ''}`}>
-            {/* Show only the prompt here */}
-            {isFlipTheScript ? (
-              <img
-                src={`${SERVER_BASE_URL}${currentPromptIdentifier}`}
-                alt='Prompt Image'
-                className='prompt-image'
-                style={{
-                  display: 'block',
-                  width: '170px',
-                  height: 'auto',
-                  objectFit: 'contain',
-                  borderRadius: '8px',
-                  boxShadow: '0 6px 16px rgba(0, 0, 0, 0.4)',
-                  margin: '0',
-                }}
-              />
-            ) : (
-              <p>{currentPromptIdentifier}</p>
-            )}
-            {/* Remove cue from here */}
-            {/* {!droppedCardPath && !isFlipTheScript && ...} */}
+        {/* Mobile: Horizontal layout for prompt + drop zone */}
+        <div className='mobile-prompt-and-drop'>
+          {/* Original Prompt Display Area */}
+          <div className='prompt-display-area'>
+            <div className={`current-prompt-box ${isFlipTheScript ? 'flip-script-mode' : ''}`}>
+              {/* Show only the prompt here */}
+              {isFlipTheScript ? (
+                <img
+                  src={`${SERVER_BASE_URL}${currentPromptIdentifier}`}
+                  alt='Prompt Image'
+                  className='prompt-image'
+                  style={{
+                    display: 'block',
+                    width: '170px',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    borderRadius: '8px',
+                    boxShadow: '0 6px 16px rgba(0, 0, 0, 0.4)',
+                    margin: '0',
+                  }}
+                />
+              ) : (
+                <p>{currentPromptIdentifier}</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* Dedicated Drop Zone Area (Wrap with Droppable) */}
-        {!isFlipTheScript && (
-          <Droppable
-            id='prompt-drop-zone'
-            className={`card-drop-zone ${_isDraggingOver ? 'drag-over' : ''}`}
-          >
-            {/* <<< Wrap content in flip structure >>> */}
-            <div className='flip-card'>
-              <div
-                className={`flip-card-inner ${isFlipping ? 'flipping' : ''}`}
-                onTransitionEnd={handleFlipEnd} // <<< Use onTransitionEnd for CSS transitions
-              >
-                <div className='flip-card-front'>
-                  {droppedCardPath ? (
-                    <img
-                      src={`${SERVER_BASE_URL}${droppedCardPath}`}
-                      alt='Submitted Answer'
-                      className='submitted-card-image'
-                    />
-                  ) : (
-                    <div className='drop-zone-cue'>Drop Card Here</div>
-                  )}
-                </div>
-                <div className='flip-card-back'>
-                  <span className='card-back-logo'>QP</span>
+          {/* Dedicated Drop Zone Area (Wrap with Droppable) */}
+          {!isFlipTheScript && (
+            <Droppable
+              id='prompt-drop-zone'
+              className={`card-drop-zone ${_isDraggingOver ? 'drag-over' : ''}`}
+            >
+              {/* <<< Wrap content in flip structure >>> */}
+              <div className='flip-card'>
+                <div
+                  className={`flip-card-inner ${isFlipping ? 'flipping' : ''}`}
+                  onTransitionEnd={handleFlipEnd} // <<< Use onTransitionEnd for CSS transitions
+                >
+                  <div className='flip-card-front'>
+                    {droppedCardPath ? (
+                      <img
+                        src={`${SERVER_BASE_URL}${droppedCardPath}`}
+                        alt='Submitted Answer'
+                        className='submitted-card-image'
+                      />
+                    ) : (
+                      <div className='drop-zone-cue'>Drop Card Here</div>
+                    )}
+                  </div>
+                  <div className='flip-card-back'>
+                    <span className='card-back-logo'>QP</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Droppable>
-        )}
+            </Droppable>
+          )}
+        </div>
 
         {isFlipTheScript ? (
           <div className='response-input-area'>
