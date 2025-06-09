@@ -206,13 +206,13 @@ input[type='file']::-webkit-file-upload-button:hover {
   background-color: var(--button-secondary-hover-bg);
 }
 
-/* Container/Card Base Style */
+/* Container/Card Base Style - Borderless for more screen space */
 .card {
-  background-color: var(--card-background);
-  border-radius: var(--border-radius);
-  padding: 25px;
-  box-shadow: var(--box-shadow);
-  border: 1px solid var(--border-color);
+  background-color: transparent;
+  border-radius: 0;
+  padding: 15px;
+  box-shadow: none;
+  border: none;
 }
 
 /* Utility for centering content */
@@ -232,11 +232,11 @@ ul {
   margin: 0;
 }
 
-/* Main App Container */
+/* Main App Container - Reduced padding for more screen space */
 .App {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 /* Style main content area to center its child */
@@ -744,10 +744,10 @@ ul {
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
-  padding: 15px;
-  background: var(--background-color);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
+  padding: 10px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
 }
 
 .hand-image-wrapper {
