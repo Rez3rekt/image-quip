@@ -1,0 +1,37 @@
+services:
+  # Backend API Service
+  - type: web
+    name: chirped-api
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: HOST
+        value: 0.0.0.0
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: ./data/database.sqlite
+      - key: MAX_FILE_SIZE
+        value: 10485760
+      - key: UPLOAD_PATH
+        value: ./uploads
+      - key: LOG_LEVEL
+        value: info
+
+  # Frontend Static Site
+  - type: web
+    name: chirped-frontend
+    env: static
+    plan: free
+    buildCommand: npm run build
+    staticPublishPath: ./client/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html 
