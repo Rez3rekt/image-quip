@@ -1,0 +1,44 @@
+# Production Dockerfile for Chirped Backend
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY server/package*.json ./server/
+
+# Install dependencies
+RUN npm ci --only=production && \
+    cd server && npm ci --only=production
+
+# Copy source code
+COPY server/ ./server/
+
+# Build client
+COPY client/ ./client/
+RUN cd client && npm ci && npm run build
+
+# Production stage
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install production dependencies
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/server/node_modules ./server/node_modules
+COPY --from=builder /app/server ./server
+COPY --from=builder /app/client/dist ./client/dist
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# Create necessary directories
+RUN mkdir -p /app/server/uploads /app/server/data && \
+    chown -R nodejs:nodejs /app
+
+USER nodejs
+
+EXPOSE 3001
+
+CMD ["node", "server/server.js"] 

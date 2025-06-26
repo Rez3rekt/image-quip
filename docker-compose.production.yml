@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # Database
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: chirped_production
+      POSTGRES_USER: chirped_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chirped_network
+    restart: unless-stopped
+
+  # Redis for sessions and real-time features
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    networks:
+      - chirped_network
+    restart: unless-stopped
+
+  # Backend API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://chirped_user:${POSTGRES_PASSWORD}@postgres:5432/chirped_production
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET}
+      ALLOWED_ORIGINS: ${FRONTEND_URL}
+      PORT: 3001
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - chirped_network
+    restart: unless-stopped
+    volumes:
+      - uploads:/app/uploads
+
+  # Frontend (served by nginx)
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.production
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      REACT_APP_API_URL: ${API_URL}
+    depends_on:
+      - api
+    networks:
+      - chirped_network
+    restart: unless-stopped
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro
+
+volumes:
+  postgres_data:
+  redis_data:
+  uploads:
+
+networks:
+  chirped_network:
+    driver: bridge 
