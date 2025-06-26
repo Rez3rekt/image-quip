@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'; // Need to install uuid: npm install uuid
 
-const CLIENT_ID_KEY = 'imageQuipClientId';
+const CLIENT_ID_KEY = 'chirpedClientId';
 
 /**
  * Retrieves the persistent client ID from localStorage,

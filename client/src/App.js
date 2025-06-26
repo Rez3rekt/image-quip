@@ -1,5 +1,5 @@
 // client/src/App.js
-import React, { useState, useEffect, useCallback, Suspense } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import io from 'socket.io-client';
 import TitleScreen from './components/TitleScreen';
 import Header from './components/Header';

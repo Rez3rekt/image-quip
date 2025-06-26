@@ -1,9 +1,8 @@
-/* styles/VotingScreen.css - Cleaned Version */
+/* styles/VotingScreen.css - Clean Version Matching VoteRevealScreen */
 
 .voting-screen-container {
   padding: 20px;
   text-align: center;
-  /* background-color: var(--card-background); /* Optional dark bg */
 }
 
 .voting-screen-container h2,
@@ -13,7 +12,6 @@
 }
 
 .prompt-display-area .current-prompt-box {
-  /* Inherit from PromptScreen? If not, style here */
   border: none;
   background-color: transparent;
   color: var(--text-color);
@@ -84,35 +82,47 @@
 .vote-content-wrapper {
   width: 100%;
   margin-bottom: 15px;
-  min-height: 200px; /* Give space for card or text */
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Restore wrapper and basic flip styles */
-
-.vote-option .image-card-wrapper {
-  /* Recheck this selector if needed */
+/* === OVERRIDE GLOBAL IMAGE-CARD STYLES FOR VOTING === */
+.voting-screen-container .image-card-wrapper {
+  width: auto;
 }
 
-/* Using the specific wrapper rule we added */
-/*
-.vote-content-wrapper .image-card-wrapper {
-    width: 100%;
-    max-width: 200px; 
-    aspect-ratio: var(--card-aspect-ratio); 
-    margin: 0 auto; 
-    position: relative;
-} 
-*/
+.voting-screen-container .image-card {
+  position: static;
+  width: auto;
+  padding-bottom: 0;
+  overflow: visible;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
 
+.voting-screen-container .image-card img {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+}
+
+/* === FLIP CARD STYLES - MATCHING VOTEREVEALSCREEN === */
 .vote-option-flip-card {
   background-color: transparent;
-  width: 160px;
-  height: calc(160px * 16 / 9);
+  width: 200px; /* Same as VoteRevealScreen */
+  height: calc(200px * 16 / 9); /* Same as VoteRevealScreen */
   perspective: 1000px;
-  margin: 0 auto; /* Center in flex wrapper */
+  margin: 0 auto;
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .vote-option-flip-card .flip-card-inner {
@@ -123,6 +133,8 @@
   transition: transform 0.6s;
   transform-style: preserve-3d;
   transform: rotateY(180deg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .vote-option-flip-card .flip-card-inner.flipping {
@@ -144,19 +156,24 @@
   background-color: var(--card-background);
   color: black;
   display: flex;
-  align-items: center;
+  align-items: center; /* CENTER alignment like VoteRevealScreen */
   justify-content: center;
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .vote-option-flip-card .flip-card-front .vote-option-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  display: block !important;
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  width: 100% !important; /* Full width like VoteRevealScreen */
+  height: 100% !important; /* Full height like VoteRevealScreen */
+  object-fit: cover !important; /* Cover fit like VoteRevealScreen */
+  object-position: center center !important;
   border-radius: var(--border-radius);
 }
 
-/* Restore back face styles */
 .vote-option-flip-card .flip-card-back {
   background-color: var(--card-background-darker);
   color: var(--text-color);
@@ -166,8 +183,9 @@
   font-size: 2.5em;
   font-weight: bold;
   transform: rotateY(180deg);
-  padding: 5px;
+  border-radius: var(--border-radius);
   box-sizing: border-box;
+  padding: 5px;
 }
 
 .vote-option-flip-card .card-back-logo {
@@ -177,18 +195,7 @@
   line-height: 1.1;
   width: 100%;
 }
-
-/* Remove temporary debug style */
-/*
-.vote-content-wrapper .debug-vote-image {
-    display: block; 
-    max-width: 200px; 
-    width: 100%; 
-    height: auto; 
-    border: 3px solid red; 
-    background-color: rgba(255, 0, 0, 0.2); 
-}
-*/
+/* === END FLIP CARD STYLES === */
 
 .vote-option button {
   margin-top: 15px;
@@ -229,26 +236,14 @@
   overflow-y: auto;
 }
 
-/* Add responsive adjustments for smaller screens */
+/* === RESPONSIVE ADJUSTMENTS === */
 @media (max-width: 768px) {
   .response-text-option {
     width: 240px;
     height: 200px;
     font-size: 0.9em;
   }
-}
 
-@media (max-width: 480px) {
-  .response-text-option {
-    width: 160px;
-    height: 160px;
-    padding: 8px;
-    font-size: 0.85em;
-  }
-}
-
-/* --- Responsive Adjustments --- */
-@media (max-width: 768px) {
   .vote-options-container {
     flex-direction: column;
     align-items: center;
@@ -260,8 +255,15 @@
     max-width: 400px;
   }
 }
-/* --- Add media query for smaller mobile screens --- */
+
 @media (max-width: 480px) {
+  .response-text-option {
+    width: 160px;
+    height: 160px;
+    padding: 8px;
+    font-size: 0.85em;
+  }
+
   .vote-options-container {
     flex-direction: row;
     align-items: flex-start;
@@ -273,22 +275,19 @@
     max-width: none;
   }
 
-  /* Reduce card size */
   .vote-option-flip-card {
     width: 120px;
     height: calc(120px * 16 / 9);
   }
 
-  /* Adjust button size */
   .vote-option button {
     width: 100%;
     padding: 8px 10px;
     font-size: 0.9rem;
   }
 }
-/* --- End Responsive Adjustments --- */
 
-/* Classic mode prompt box styles - update for vertical centering */
+/* Classic mode prompt box styles */
 .voting-screen-container .prompt-display-area .current-prompt-box:not(:has(img)) {
   width: 200px !important;
   min-height: 200px !important;
@@ -312,4 +311,4 @@
   text-align: center;
   width: 100%;
   line-height: 1.2;
-}
+} 

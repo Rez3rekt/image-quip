@@ -41,7 +41,7 @@ function Header({
           }
         }} // Keyboard accessibility
       >
-        Qwik Pik
+        Chirped
       </span>
 
       {/* Game Code with specific class - conditional rendering */}

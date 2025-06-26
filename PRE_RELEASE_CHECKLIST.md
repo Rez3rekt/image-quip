@@ -1,7 +1,7 @@
-# ImageQuip Pre-Release Checklist
+# Chirped Pre-Release Checklist
 
 ## Project Overview
-**ImageQuip** is a multiplayer party game combining images and text for creative gameplay. This document tracks all items that must be completed before production release.
+**Chirped** is a multiplayer party game combining images and text for creative gameplay. This document tracks all items that must be completed before production release.
 
 ## Release Readiness Status: 🟢 NEARLY READY
 **Critical Issues Remaining**: 0 blockers, 6 high priority items

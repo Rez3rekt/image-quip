@@ -239,7 +239,7 @@ function CardInspectorModal({
                 )}
               </div>
               <div className='flip-card-back'>
-                <span className='card-back-logo'>Qwik Pik</span>
+                <span className='card-back-logo'>Chirped</span>
               </div>
             </div>
           </div>

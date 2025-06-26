@@ -1,6 +1,6 @@
-# ImageQuip Production Deployment Guide
+# Chirped Production Deployment Guide
 
-This guide covers deploying ImageQuip to a production server with proper security, monitoring, and process management.
+This guide covers deploying Chirped to a production server with proper security, monitoring, and process management.
 
 ## 🚀 Quick Production Setup
 

@@ -100,7 +100,7 @@ app.set('trust proxy', 1);
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+    if (!origin) {return callback(null, true);}
     
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
@@ -121,7 +121,7 @@ app.use((req, res, next) => {
     console.log('CORS preflight:', {
       origin: req.headers.origin,
       allowedOrigins: allowedOrigins,
-      isAllowed: allowedOrigins.includes(req.headers.origin)
+      isAllowed: allowedOrigins.includes(req.headers.origin),
     });
   }
   next();
@@ -285,7 +285,7 @@ app.get('/metrics', readLimiter, (req, res) => {
 // API documentation endpoint
 app.get('/api', readLimiter, (req, res) => {
   const apiInfo = {
-    name: 'ImageQuip API',
+    name: 'Chirped API',
     version: '1.0.0',
     environment: NODE_ENV,
     endpoints: {
@@ -381,7 +381,7 @@ server.listen(PORT, HOST, () => {
   });
   
   if (NODE_ENV === 'development') {
-    console.log(`🚀 ImageQuip Server started successfully!`);
+    console.log(`🚀 Chirped Server started successfully!`);
     console.log(`   Environment: ${NODE_ENV}`);
     console.log(`   Server: http://${HOST}:${PORT}`);
     console.log(`   Health: http://${HOST}:${PORT}/health`);

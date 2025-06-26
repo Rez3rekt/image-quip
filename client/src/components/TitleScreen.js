@@ -1,5 +1,5 @@
 // client/src/components/TitleScreen.js
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/global.css';
 import '../styles/TitleScreen.css';
 

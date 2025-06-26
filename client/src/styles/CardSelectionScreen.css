@@ -101,6 +101,23 @@
   text-align: left;
 }
 
+/* High specificity rules for card selection screen deck names - UPDATED FOR DYNAMIC SIZING */
+.card-selection-container .deck-selection-area .deck-item-header .deck-name {
+  font-weight: bold !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  overflow: visible !important; /* Changed from hidden to visible */
+  text-overflow: clip !important; /* Changed from ellipsis to clip */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,1) !important;
+  line-height: 1.2 !important;
+  display: block !important;
+  max-width: none !important; /* Reset any restrictive max-width */
+  text-align: center !important;
+  width: 95% !important;
+  padding: 4px 6px !important;
+  box-sizing: border-box !important;
+}
+
 /* Grid layout for deck items */
 .deck-items-grid {
   display: flex;
@@ -187,19 +204,26 @@
 
 .deck-item-header {
   padding: 5px 8px;
-  background-color: rgba(0, 0, 0, 0.2); /* Slightly darker header */
+  background-color: rgba(0, 0, 0, 0.4); /* Darker background for better contrast */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for definition */
 }
 
-.deck-name {
-  font-size: 0.9em;
-  font-weight: bold;
-  color: var(--text-color);
+.deck-item-header .deck-name {
+  font-weight: bold !important;
+  color: #ffffff !important;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible; /* Changed from hidden */
+  text-overflow: clip; /* Changed from ellipsis */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,1); /* Stronger shadow */
+  line-height: 1.2; /* Improve line height for better readability */
+  display: block !important; /* Ensure it's visible */
+  text-align: center;
+  width: 95%;
+  padding: 4px 6px;
+  box-sizing: border-box;
 }
 
 .delete-deck-button {
@@ -332,6 +356,40 @@
     width: 72px !important; /* Reduce width slightly and add !important */
   }
 
+  /* Adjust deck header for mobile visibility */
+  .deck-item-header {
+    padding: 3px 4px; /* Reduce padding to save space */
+    min-height: 24px; /* Ensure minimum height for readability */
+  }
+
+  /* Make deck names more visible on mobile - UPDATED FOR DYNAMIC SIZING */
+  .deck-item-header .deck-name {
+    font-weight: bold !important;
+    overflow: visible !important; /* Changed from hidden */
+    text-overflow: clip !important; /* Changed from ellipsis */
+    white-space: nowrap;
+    color: #ffffff !important;
+    display: block !important; /* Force visibility */
+    text-align: center !important;
+    width: 95% !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,1) !important;
+  }
+
+  /* Adjust delete button for mobile */
+  .delete-deck-button {
+    font-size: 0.8rem !important; /* Smaller delete button */
+    padding: 0 2px !important;
+    margin-left: 2px;
+  }
+
+  /* Adjust deck preview count for mobile */
+  .deck-preview-count {
+    font-size: 0.6em; /* Smaller text */
+    padding: 0px 3px; /* Less padding */
+    bottom: 2px;
+    right: 3px;
+  }
+
   .card-pool-grid {
     grid-template-columns: repeat(4, 1fr); /* Show 4 columns on mobile */
   }
@@ -340,7 +398,7 @@
   .deck-items-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px; /* Keep the gap */
+    gap: 8px; /* Slightly reduce gap to fit better */
     justify-content: normal; /* Reset flex property */
   }
 
@@ -348,5 +406,84 @@
   .deck-item {
     width: auto; /* Let grid control the width */
   }
+
+  /* Additional mobile-specific deck styling */
+  .deck-selection-area h4 {
+    font-size: 1em; /* Ensure heading is readable */
+    margin-bottom: 8px;
+  }
 }
 /* --- End Responsive Adjustments --- */
+
+/* --- Extra Small Mobile Devices --- */
+@media (max-width: 360px) {
+  /* Further adjustments for very small screens */
+  .deck-items-grid .deck-item {
+    width: 60px !important; /* Even smaller for tiny screens */
+  }
+
+  .deck-item-header .deck-name {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    text-align: center !important;
+    width: 95% !important;
+  }
+
+  .deck-item-header {
+    padding: 2px 3px; /* Minimal padding */
+    min-height: 20px; /* Smaller minimum height */
+  }
+
+  .delete-deck-button {
+    font-size: 0.7rem !important; /* Tiny delete button */
+    padding: 0 1px !important;
+  }
+
+  .deck-preview-count {
+    font-size: 0.5em; /* Very small count text */
+    padding: 0px 2px;
+    bottom: 1px;
+    right: 2px;
+  }
+
+  .deck-items-grid {
+    gap: 6px; /* Minimal gap for tiny screens */
+  }
+}
+/* --- End Extra Small Mobile --- */
+
+/* High Specificity Overrides for Deck Names in Card Selection - REMOVED TRUNCATION */
+.card-selection-container .deck-selection-area .deck-item-header .deck-name {
+  font-weight: bold !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,1) !important;
+  line-height: 1.2 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-align: center !important;
+  width: 95% !important;
+}
+
+/* Mobile specific overrides - REMOVED TRUNCATION */
+@media (max-width: 480px) {
+  .card-selection-container .deck-selection-area .deck-item-header .deck-name {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    text-align: center !important;
+    width: 95% !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .card-selection-container .deck-selection-area .deck-item-header .deck-name {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    text-align: center !important;
+    width: 95% !important;
+  }
+}
+/* --- End High Specificity Overrides --- */

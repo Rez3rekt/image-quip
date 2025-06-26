@@ -96,11 +96,11 @@ module.exports = (env, argv) => {
         {
           directory: path.join(__dirname, 'src'),
           publicPath: '/src',
-        }
+        },
       ],
       historyApiFallback: {
         disableDotRule: true,
-        index: '/index.html'
+        index: '/index.html',
       },
       port: 3000,
       hot: true,
@@ -109,8 +109,8 @@ module.exports = (env, argv) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-        'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
-      }
+        'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+      },
     } : undefined,
     performance: {
       hints: isProduction ? 'warning' : false,

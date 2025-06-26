@@ -1,5 +1,5 @@
 {
-  "name": "image-quip",
+  "name": "chirped",
   "version": "1.0.0",
   "description": "A multiplayer party game using images and text for humorous responses",
   "private": true,

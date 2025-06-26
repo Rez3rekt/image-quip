@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'imageQuip',
+      name: 'chirped',
       script: 'server.js',
       instances: 1, // Can be increased for load balancing
       exec_mode: 'fork', // Use 'cluster' for multiple instances
@@ -35,6 +35,8 @@ module.exports = {
       
       // Environment-specific settings
       node_args: '--max-old-space-size=1024',
+      repo: 'git@github.com:yourusername/chirped.git',
+      path: '/var/www/chirped',
     },
   ],
   

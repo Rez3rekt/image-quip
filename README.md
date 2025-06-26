@@ -1,6 +1,6 @@
-# ImageQuip - Multiplayer Image Caption Game 🎮
+# Chirped - Multiplayer Image Caption Game 🎮
 
-ImageQuip is a production-ready multiplayer gaming platform featuring image caption games with real-time interactions, comprehensive user management, and advanced gaming features.
+Chirped is a production-ready multiplayer gaming platform featuring image caption games with real-time interactions, comprehensive user management, and advanced gaming features.
 
 ## 🚀 Features
 
@@ -46,7 +46,7 @@ ImageQuip is a production-ready multiplayer gaming platform featuring image capt
 1. **Clone the repository**:
    ```bash
    git clone <your-repo-url>
-   cd image-quip
+   cd chirped
    ```
 
 2. **Install dependencies** (if needed):
@@ -169,4 +169,4 @@ For support or questions, please check the console logs for debugging informatio
 
 ---
 
-**ImageQuip** - A complete, production-ready multiplayer gaming platform 🎮 
+**Chirped** - A complete, production-ready multiplayer gaming platform 🎮 

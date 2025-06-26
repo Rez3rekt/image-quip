@@ -1,6 +1,6 @@
-# ImageQuip - Design Document
+# Chirped - Design Document
 
-This document outlines the core design principles, visual styles, and component guidelines for the ImageQuip application. Its purpose is to ensure a consistent and high-quality user experience across all parts of the game.
+This document outlines the core design principles, visual styles, and component guidelines for the Chirped application. Its purpose is to ensure a consistent and high-quality user experience across all parts of the game.
 
 ## 1. Core Principles
 

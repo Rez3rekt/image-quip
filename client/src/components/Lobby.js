@@ -1,7 +1,7 @@
 // client/src/components/Lobby.js
 import { useState, useEffect } from 'react';
 import '../styles/Lobby.css'; // Optional: Add specific styles if needed
-import { LoadingSpinner } from './common';
+
 
 function Lobby({ gameState, socket, playerId, isHost, error, setError, onLeaveGame }) {
   const [copied, setCopied] = useState(false); // State for copy feedback
@@ -212,7 +212,7 @@ function Lobby({ gameState, socket, playerId, isHost, error, setError, onLeaveGa
 
   // --- Game Mode Descriptions ---
   const gameModeDescriptions = {
-    Classic: 'Standard Qwik Pik gameplay. Match hilarious images to prompts and vote for the best!',
+    Classic: 'Standard Chirped gameplay. Match hilarious images to prompts and vote for the best!',
     'Mega Deck': 'All selected cards are shuffled into one big pile that everyone draws from.',
     'Flip the Script':
       'Players get an image prompt and write a text response. Vote for the funniest response!',

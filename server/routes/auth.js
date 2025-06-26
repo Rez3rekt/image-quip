@@ -180,7 +180,7 @@ function createAuthRouter(db, JWT_SECRET) {
                 success: true,
                 message: 'Password reset successfully! You can now login with your new password.',
               });
-            }
+            },
           );
         } catch (hashError) {
           console.error('Error hashing new password:', hashError);

@@ -14,7 +14,7 @@ const cardContainerStyle = {
   maxWidth: '400px',
   aspectRatio: '9/16',
   borderRadius: '6px',
-  border: '2px solid #555e6f', // Using var(--border-color-light) value
+  border: 'none', // Remove border to make it invisible
   overflow: 'hidden',
   boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
   display: 'flex',

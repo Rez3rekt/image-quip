@@ -1,8 +1,8 @@
-# ImageQuip - Enhanced Development Document
+# Chirped - Enhanced Development Document
 
 ## Executive Summary
 
-ImageQuip is a multiplayer party game that combines images and text for creative, humorous gameplay. Players submit images in response to prompts or text responses for image prompts, then vote on their favorites in head-to-head matchups. This document outlines the current implementation and provides a roadmap for recreating the game to a highly improved standard.
+Chirped is a multiplayer party game that combines images and text for creative, humorous gameplay. Players submit images in response to prompts or text responses for image prompts, then vote on their favorites in head-to-head matchups. This document outlines the current implementation and provides a roadmap for recreating the game to a highly improved standard.
 
 ## Current Game Overview
 
