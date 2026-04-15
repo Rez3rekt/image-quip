@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
@@ -36,14 +37,8 @@ module.exports = (env, argv) => {
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
-            options: {
-              presets: [
-                ['@babel/preset-env', {
-                  targets: isProduction ? '> 0.25%, not dead' : 'last 2 versions',
-                }],
-                '@babel/preset-react',
-              ],
-            },
+            // Presets: client/babel.config.js. Do not set cacheDirectory: true — it can conflict
+            // with Babel’s config API ("Caching has already been configured").
           },
         },
         {
@@ -70,9 +65,16 @@ module.exports = (env, argv) => {
       extensions: ['.js', '.jsx'],
     },
     plugins: [
+      new webpack.EnvironmentPlugin({
+        REACT_APP_SERVER_URL: '',
+        REACT_APP_SERVER_BASE_URL: '',
+        REACT_APP_LOBBY_MUSIC_FILE: '',
+      }),
       new HtmlWebpackPlugin({
         template: './public/index.html',
         filename: 'index.html',
+        inject: 'body',
+        scriptLoading: 'defer',
         minify: isProduction ? {
           removeComments: true,
           collapseWhitespace: true,

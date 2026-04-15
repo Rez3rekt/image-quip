@@ -1,0 +1,24 @@
+# Dependencies (installed on Vercel)
+node_modules
+**/node_modules
+
+# Local caches (can exceed Vercel upload limits)
+**/.parcel-cache
+.parcel-cache
+.cache
+**/.cache
+
+# Build outputs (we build on Vercel)
+client/dist
+dist
+build
+
+# Runtime / user data — not needed for static client build
+server/uploads
+server/data
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Git
+.git
