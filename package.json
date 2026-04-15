@@ -8,10 +8,10 @@
     "server"
   ],
   "scripts": {
-    "start": "npm run start:server & npm run start:client",
+    "start": "npx concurrently \"npm run start:server\" \"npm run start:client\"",
     "start:client": "cd client && npm start",
     "start:server": "cd server && node server.js",
-    "build": "cd client && npm run build",
+    "build": "node scripts/build-client.js",
     "lint": "eslint . --ext .js,.jsx --fix",
     "lint:check": "eslint . --ext .js,.jsx",
     "format": "prettier --write \"**/*.{js,jsx,json,md,css}\"",
