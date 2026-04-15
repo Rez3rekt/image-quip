@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import '../styles/RegisterScreen.css'; // Create this CSS file
-import { SERVER_URL } from '../config'; // Import SERVER_URL
+import { SERVER_URL, isGameServerConfigured, GAME_SERVER_CONFIG_HELP } from '../config';
 import { LoadingButton } from './common';
 
 function RegisterScreen({ onRegisterSuccess, onNavigateBack }) {
@@ -8,7 +8,6 @@ function RegisterScreen({ onRegisterSuccess, onNavigateBack }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [receiveEmails, setReceiveEmails] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,10 +26,13 @@ function RegisterScreen({ onRegisterSuccess, onNavigateBack }) {
       return;
     }
 
+    if (!isGameServerConfigured()) {
+      setError(`Game server is not configured for this site. ${GAME_SERVER_CONFIG_HELP}`);
+      return;
+    }
+
     setIsLoading(true);
 
-    // --- Placeholder for actual Register API call ---
-    const _registrationData = { username, email, password, receiveEmails };
     try {
       const response = await fetch(`${SERVER_URL}/api/auth/register`, {
         method: 'POST',
@@ -106,17 +108,6 @@ function RegisterScreen({ onRegisterSuccess, onNavigateBack }) {
             disabled={isLoading}
           />
         </div>
-        <div className='form-group checkbox-group'>
-          <input
-            type='checkbox'
-            id='receiveEmails'
-            checked={receiveEmails}
-            onChange={e => setReceiveEmails(e.target.checked)}
-            disabled={isLoading}
-          />
-          <label htmlFor='receiveEmails'>I would like to receive promotional emails.</label>
-        </div>
-
         {error && <p className='error-message'>{error}</p>}
 
         <div className='form-actions'>

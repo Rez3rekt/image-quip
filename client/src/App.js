@@ -1,20 +1,24 @@
 // client/src/App.js
-import { useState, useEffect, useCallback, Suspense } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useCallback, useRef, Suspense } from 'react';
 import io from 'socket.io-client';
 import TitleScreen from './components/TitleScreen';
 import Header from './components/Header';
-import LoginScreen from './components/LoginScreen'; // Import LoginScreen
-import RegisterScreen from './components/RegisterScreen'; // Import RegisterScreen
-import _FinalResultsScreen from './components/FinalResultsScreen'; // <-- Import FinalResultsScreen if not already
-import _DisplayVotingScreen from './components/DisplayVotingScreen'; // <<< Import Display Component
-import _DisplayVoteRevealScreen from './components/DisplayVoteRevealScreen';
-import _DisplayFinalResultsScreen from './components/DisplayFinalResultsScreen';
-import { SERVER_URL, SERVER_BASE_URL } from './config';
+import { SERVER_URL, SERVER_BASE_URL, lobbyMusicSrc, isGameServerConfigured } from './config';
 import { getClientId } from './utils/clientId'; // Import client ID utility
 import CardWallBackground from './components/CardWallBackground'; // <<< Import new component
-import { LoadingState, ToastContainer, ConnectionStatus, ErrorBoundary } from './components/common'; // Import loading components, toast, and error boundary
+import {
+  LoadingState,
+  ToastContainer,
+  ConnectionStatus,
+  ErrorBoundary,
+  showToast,
+} from './components/common';
+import FirstRunOnboarding, { isOnboardingDismissed } from './components/FirstRunOnboarding';
+import { useGameAudio } from './hooks/useGameAudio';
 import './styles/global.css';
+import './styles/game-cards.css';
 import useDeviceDetect from './utils/useDeviceDetect';
+import { getUserIdFromToken } from './utils/jwtPayload';
 
 // Lazy load heavy components for better performance
 import {
@@ -23,6 +27,7 @@ import {
   LazyLoginScreen,
   LazyRegisterScreen,
   LazyAccountScreen,
+  LazyTradingScreen,
   LazyDisplayVotingScreen,
   LazyDisplayVoteRevealScreen,
   LazyDisplayFinalResultsScreen,
@@ -30,6 +35,7 @@ import {
 } from './components/LazyComponents';
 
 const persistentClientId = getClientId(); // Get or generate client ID on app load
+const REJOIN_KEY = 'imageQuip_rejoinPayload';
 
 function App() {
   const [socket, setSocket] = useState(null);
@@ -37,7 +43,7 @@ function App() {
   const [gameState, setGameState] = useState(null);
   const [playerId, setPlayerId] = useState(null); // This is the temporary socket ID
   const [error, setError] = useState(null);
-  const [currentView, setCurrentView] = useState('title'); // 'title', 'game', 'mycards', 'login', 'register', 'account'
+  const [currentView, setCurrentView] = useState('title'); // 'title', 'game', 'mycards', 'trading', 'login', 'register', 'account'
   const [appNickname, setAppNickname] = useState(''); // <-- Add nickname state
   // Initialize username from localStorage
   const [loggedInUsername, setLoggedInUsername] = useState(
@@ -47,40 +53,101 @@ function App() {
     localStorage.getItem('userIcon') || '👤',
   ); // <-- Add state for icon
   const [ownedCards, setOwnedCards] = useState([]); // Store paths of owned cards
-  const [_showLoginModal, _setShowLoginModal] = useState(false);
-  const [_showRegisterModal, _setShowRegisterModal] = useState(false);
-
+  /** Trading room UI state — listeners live on App so Strict Mode remounts of TradingScreen do not drop tradeRoomJoined. */
+  const [tradeRoomState, setTradeRoomState] = useState(null);
+  /** Logged-in trade partner selection — lives in App so socket.io handlers can update the invitee when tradePartnerOpened fires. */
+  const [tradePartnerUserId, setTradePartnerUserId] = useState('');
+  /** Inline banner when someone taps Trade with you (supplements toast). */
+  const [tradeIncomingBanner, setTradeIncomingBanner] = useState(null);
+  const tradeRoomStateRef = useRef(null);
   // Add device detection hook
   const deviceInfo = useDeviceDetect();
+  const currentViewRef = useRef('title');
+  const [showOnboarding, setShowOnboarding] = useState(
+    () => typeof window !== 'undefined' && !isOnboardingDismissed(),
+  );
 
-  // <<< NEW: Effect to register guest client ID with socket >>>
+  const { lobbyAudioRef } = useGameAudio(gameState?.phase, currentView);
+
+  // Sync before paint so socket handlers (e.g. tradePartnerOpened) never see stale null refs ahead of useEffect.
+  useLayoutEffect(() => {
+    currentViewRef.current = currentView;
+  }, [currentView]);
+
+  useLayoutEffect(() => {
+    tradeRoomStateRef.current = tradeRoomState;
+  }, [tradeRoomState]);
+
   useEffect(() => {
-    // if (socket && persistentClientId && !loggedInUsername) { // Only for guests
-    //     console.log(`[App GuestReg] Emitting 'registerGuestClientId' for ${persistentClientId} to socket ${socket.id}`);
-    //     socket.emit('registerGuestClientId', persistentClientId);
-    // }
-    // <<< This logic will be moved to the socket 'connect' handler >>>
-  }, [socket, persistentClientId, loggedInUsername]);
+    if (!tradeRoomState) {
+      setTradePartnerUserId('');
+      setTradeIncomingBanner(null);
+    }
+  }, [tradeRoomState]);
 
-  // -- Navigation Functions (Define BEFORE hooks that use them) --
-  const navigateToGame = () => setCurrentView('game');
-  const navigateToMyCards = () => setCurrentView('mycards');
-  const navigateToTitle = () => {
-    // Optional: Add logic here if leaving game needs cleanup (e.g., disconnect socket?)
-    setGameState(null); // Clear game state when returning to title
+  /** Leave trading room when navigating away (do not emit from TradingScreen unmount — Strict Mode remount would fire leave immediately after host). */
+  const prevViewForTradingRef = useRef(currentView);
+  useEffect(() => {
+    const prev = prevViewForTradingRef.current;
+    if (prev === 'trading' && currentView !== 'trading' && socket) {
+      socket.emit('leaveTradeRoom');
+      setTradeRoomState(null);
+    }
+    prevViewForTradingRef.current = currentView;
+  }, [currentView, socket]);
+
+  useEffect(() => {
+    if (currentView !== 'game' || !gameState?.gameId) {
+      return;
+    }
+    const selfId = gameState.myId;
+    const me = gameState.players?.find(p => p.id === selfId);
+    try {
+      sessionStorage.setItem(
+        REJOIN_KEY,
+        JSON.stringify({
+          gameId: gameState.gameId,
+          nickname: appNickname || me?.nickname || 'Player',
+          icon: me?.icon || '👤',
+        }),
+      );
+    } catch {
+      /* ignore */
+    }
+  }, [gameState, currentView, appNickname]);
+
+  // -- Navigation (useCallback so socket listener effect does not re-run every render) --
+  const navigateToGame = useCallback(() => setCurrentView('game'), []);
+  const navigateToMyCards = useCallback(() => setCurrentView('mycards'), []);
+  const navigateToTitle = useCallback(() => {
+    try {
+      sessionStorage.removeItem(REJOIN_KEY);
+    } catch {
+      /* ignore */
+    }
+    setGameState(null);
     setError(null);
-    // Keep appNickname when returning to title
     setCurrentView('title');
-  };
-  const navigateToLogin = () => setCurrentView('login');
-  const navigateToRegister = () => setCurrentView('register');
-  const navigateToAccount = () => setCurrentView('account'); // Add account navigation
+  }, []);
+  const navigateToLogin = useCallback(() => setCurrentView('login'), []);
+  const navigateToRegister = useCallback(() => setCurrentView('register'), []);
+  const navigateToAccount = useCallback(() => setCurrentView('account'), []);
+  const navigateToTrading = useCallback(() => {
+    setTradeRoomState(null);
+    setTradePartnerUserId('');
+    setTradeIncomingBanner(null);
+    setCurrentView('trading');
+  }, []);
   // -- End Navigation Functions --
 
   const fetchOwnedCards = useCallback(async () => {
     const token = localStorage.getItem('token');
     if (!token || !loggedInUsername) {
       setOwnedCards([]); // Clear if not logged in
+      return;
+    }
+    if (!isGameServerConfigured()) {
+      setOwnedCards([]);
       return;
     }
     try {
@@ -111,10 +178,9 @@ function App() {
 
       const data = await response.json();
       setOwnedCards(data.ownedCards || []);
-      // Clear any previous auth error on success
-      if (error === 'Your session may have expired. Please log in again.') {
-        setError(null);
-      }
+      setError(prev =>
+        prev === 'Your session may have expired. Please log in again.' ? null : prev,
+      );
     } catch (err) {
       // Avoid logging the specific 403 error again if we handled it above
       if (err.message?.includes('Forbidden')) {
@@ -125,7 +191,7 @@ function App() {
         setOwnedCards([]); // Clear on error
       }
     }
-  }, [loggedInUsername]); // <-- Only loggedInUsername is needed here
+  }, [loggedInUsername]);
 
   // --- Add Card To Collection ---
   const _addCardToCollection = useCallback(
@@ -188,11 +254,7 @@ function App() {
         } else {
           // Generic error handling for other issues
           setError(`Failed to add card: ${errorMessage}`);
-          // Revert optimistic update on error only if it was actually added optimistically
-          if (ownedCards && !ownedCards.includes(imagePath)) {
-            // Check if it was *not* there before the attempt
-            setOwnedCards(prev => prev.filter(path => path !== imagePath));
-          }
+          setOwnedCards(prev => prev.filter(path => path !== imagePath));
         }
       }
     },
@@ -248,16 +310,19 @@ function App() {
     setCurrentView('login'); // Go to login after register for now
   };
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    localStorage.removeItem('userIcon'); // <-- Clear icon on logout
+    localStorage.removeItem('userIcon');
     setLoggedInUsername(null);
-    setLoggedInUserIcon('👤'); // <-- Reset icon state
-    setSocket(null); // Disconnect socket?
-    // TODO: Add socket disconnect logic if needed
+    setLoggedInUserIcon('👤');
+    setTradeRoomState(null);
+    if (socket) {
+      socket.disconnect();
+    }
+    setSocket(null);
     navigateToTitle();
-  };
+  }, [socket]);
 
   const handleSaveChanges = preferences => {
     // Update username only if it actually changed
@@ -279,8 +344,16 @@ function App() {
 
   // --- Socket Connection Effect ---
   useEffect(() => {
-    // Force WebSocket transport
-    const s = io(SERVER_URL, { transports: ['websocket'] });
+    if (!isGameServerConfigured()) {
+      console.warn(
+        '[Chirped] Socket disabled: no game server URL. Set REACT_APP_SERVER_URL for this deployment.',
+      );
+      return undefined;
+    }
+    const s = io(SERVER_URL, {
+      transports: ['websocket', 'polling'],
+      upgrade: true,
+    });
     setSocket(s);
 
     return () => {
@@ -298,7 +371,10 @@ function App() {
     const handleConnect = () => {
       setIsConnected(true);
       setPlayerId(socket.id);
-      // <<< MOVE GUEST REGISTRATION HERE >>>
+      const token = localStorage.getItem('token');
+      if (token) {
+        socket.emit('identifyUser', token);
+      }
       if (
         persistentClientId &&
         !localStorage.getItem(
@@ -307,20 +383,39 @@ function App() {
       ) {
         socket.emit('registerGuestClientId', persistentClientId);
       }
+
+      if (currentViewRef.current === 'game') {
+        try {
+          const raw = sessionStorage.getItem(REJOIN_KEY);
+          if (raw) {
+            const { gameId, nickname, icon } = JSON.parse(raw);
+            if (gameId && nickname) {
+              socket.emit('joinGame', {
+                gameCode: gameId,
+                nickname,
+                icon: icon || '👤',
+                authToken: token || undefined,
+              });
+            }
+          }
+        } catch {
+          /* ignore */
+        }
+      }
     };
 
     const handleDisconnect = _reason => {
       setIsConnected(false);
       setGameState(null);
       setPlayerId(null);
-      setError('Disconnected from server.');
-      navigateToTitle();
+      setTradeRoomState(null);
+      showToast('Disconnected from server. Reconnecting…', 'warning', 5000);
     };
 
     const handleGameStateUpdate = newState => {
       setGameState(prevState => {
         const updatedState = {
-          ...prevState,
+          ...(prevState || {}),
           ...newState,
           myId: socket.id,
         };
@@ -331,7 +426,9 @@ function App() {
 
     const handleGameError = errorMessage => {
       console.error('[App Socket] Game Error:', errorMessage);
-      setError(errorMessage);
+      const text = typeof errorMessage === 'string' ? errorMessage : String(errorMessage);
+      setError(text);
+      showToast(text, 'error', 6000);
     };
 
     const handleGameCreated = initialGameState => {
@@ -389,14 +486,82 @@ function App() {
     // <<< Listen for Kicked Event >>>
     socket.on('kicked', message => {
       console.warn(`[App Socket] Kicked from game: ${message}`);
-      alert(`You were kicked from the lobby: ${message}`);
-      setGameState(null); // Clear game state
-      setError(null); // Clear any errors
-      setCurrentView('title'); // Go back to title screen
-      // Optionally disconnect the socket if required?
-      // s.disconnect();
-      // setSocket(null);
+      setGameState(null);
+      setError(message || 'You were kicked from the lobby.');
+      setCurrentView('title');
     });
+
+    const handleTradeRoomJoined = state => {
+      const next = {
+        roomId: state.roomId,
+        hostId: state.hostId,
+        players: state.players || [],
+        myId: state.myId,
+      };
+      tradeRoomStateRef.current = next;
+      setTradeRoomState(next);
+    };
+    const handleTradeRoomUpdate = state => {
+      setTradeRoomState(prev => {
+        const next = {
+          roomId: state.roomId,
+          hostId: state.hostId,
+          players: state.players || [],
+          myId: prev?.myId ?? socket.id,
+        };
+        tradeRoomStateRef.current = next;
+        return next;
+      });
+    };
+    const handleTradeRoomClosed = payload => {
+      setTradeRoomState(null);
+      showToast(payload?.message || 'Trading room closed.', 'warning', 6000);
+    };
+    const handleTradeRoomLeft = () => {
+      setTradeRoomState(null);
+    };
+    const handleTradeRoomError = msg => {
+      const text = typeof msg === 'string' ? msg : String(msg);
+      showToast(text, 'error', 6000);
+    };
+
+    /** Must live with [socket]-scoped listeners — do not register in TradingScreen (mount order / early deps can drop it). */
+    const handleTradePartnerOpened = payload => {
+      if (!payload?.tradingRoomId) {
+        return;
+      }
+      // Do not require currentViewRef === 'trading' — ref can lag navigation; server only targets invitee sockets.
+      const state = tradeRoomStateRef.current;
+      // If room ref is synced, codes must match. If ref is still null (rare race), still notify when we're the target.
+      if (state?.roomId && payload.tradingRoomId !== state.roomId) {
+        return;
+      }
+      const token = typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null;
+      const myUid = getUserIdFromToken(token);
+      if (myUid == null) {
+        return;
+      }
+      if (Number(payload.toUserId) !== Number(myUid)) {
+        return;
+      }
+      setTradePartnerUserId(String(payload.fromUserId));
+      setTradeIncomingBanner({
+        fromUserId: payload.fromUserId,
+        fromNickname: payload.fromNickname || 'Someone',
+      });
+      showToast(
+        `${payload.fromNickname || 'Someone'} wants to trade with you. Card trades are open below.`,
+        'info',
+        8000,
+      );
+    };
+
+    socket.on('tradeRoomJoined', handleTradeRoomJoined);
+    socket.on('tradeRoomUpdate', handleTradeRoomUpdate);
+    socket.on('tradeRoomClosed', handleTradeRoomClosed);
+    socket.on('tradeRoomLeft', handleTradeRoomLeft);
+    socket.on('tradeRoomError', handleTradeRoomError);
+    socket.on('tradePartnerOpened', handleTradePartnerOpened);
 
     return () => {
       socket.off('connect', handleConnect);
@@ -408,16 +573,16 @@ function App() {
       socket.off('test_host_receipt');
       socket.off('lobbyClosedByHost', handleLobbyClosed);
       socket.off('kicked'); // <<< Clean up kicked listener
+      socket.off('tradeRoomJoined', handleTradeRoomJoined);
+      socket.off('tradeRoomUpdate', handleTradeRoomUpdate);
+      socket.off('tradeRoomClosed', handleTradeRoomClosed);
+      socket.off('tradeRoomLeft', handleTradeRoomLeft);
+      socket.off('tradeRoomError', handleTradeRoomError);
+      socket.off('tradePartnerOpened', handleTradePartnerOpened);
     };
-  }, [
-    socket,
-    setGameState,
-    setIsConnected,
-    setPlayerId,
-    setError,
-    navigateToTitle,
-    navigateToGame,
-  ]);
+    // Intentionally only [socket]: navigation handlers are useCallback-stable so this effect must NOT
+    // re-run on every render (that was removing all listeners and dropping tradeRoomJoined / game events).
+  }, [socket]);
 
   // --- Effect to Log View Changes ---
   useEffect(() => {
@@ -437,11 +602,12 @@ function App() {
   // --- Render Logic ---
   const renderView = () => {
     // Find the current player object from gameState
-    const currentPlayer = gameState?.players?.find(p => p.id === playerId);
+    const selfId = gameState?.myId ?? playerId ?? socket?.id;
+    const currentPlayer = gameState?.players?.find(p => p.id === selfId);
     const isDisplayPlayer = currentPlayer?.isDisplayPlayer || false;
 
-    // Calculate isHost here
-    const isHost = gameState?.hostId === playerId;
+    // Calculate isHost here (use myId so it stays correct if socket id and React state diverge)
+    const isHost = gameState?.hostId === selfId;
 
     if (!isConnected && currentView === 'game') {
       return <LoadingState message='Connecting to server...' />;
@@ -457,6 +623,7 @@ function App() {
             _playerId={playerId}
             _onNavigateToGame={navigateToGame}
             onNavigateToMyCards={navigateToMyCards}
+            onNavigateToTrading={navigateToTrading}
             error={error}
             setError={setError}
             setAppNickname={setAppNickname} // <-- Pass the setter function
@@ -464,6 +631,7 @@ function App() {
             loggedInUsername={loggedInUsername}
             loggedInUserIcon={loggedInUserIcon} // <-- Pass icon state
             _deviceInfo={deviceInfo} // Pass device info
+            authToken={typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null}
           />
         );
       case 'game':
@@ -536,6 +704,27 @@ function App() {
             />
           </Suspense>
         );
+      case 'trading':
+        return (
+          <Suspense fallback={<ComponentLoadingFallback message="Loading trading..." />}>
+            <LazyTradingScreen
+              socket={socket}
+              isConnected={isConnected || !!socket?.connected}
+              tradeRoomState={tradeRoomState}
+              setTradeRoomState={setTradeRoomState}
+              tradePartnerUserId={tradePartnerUserId}
+              setTradePartnerUserId={setTradePartnerUserId}
+              tradeIncomingBanner={tradeIncomingBanner}
+              setTradeIncomingBanner={setTradeIncomingBanner}
+              onNavigateBack={navigateToTitle}
+              authToken={typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null}
+              loggedInUsername={loggedInUsername}
+              loggedInUserIcon={loggedInUserIcon}
+              setAppNickname={setAppNickname}
+              currentNickname={appNickname}
+            />
+          </Suspense>
+        );
       case 'login':
         return (
           <Suspense fallback={<ComponentLoadingFallback message="Loading login..." />}>
@@ -595,36 +784,24 @@ function App() {
           onNavigateToTitle={navigateToTitle}
           onNavigateToAccount={navigateToAccount}
         />
+        <audio
+          ref={lobbyAudioRef}
+          src={lobbyMusicSrc()}
+          preload='auto'
+          loop
+          aria-hidden='true'
+        />
         <div className='main-content'>
+          {showOnboarding && currentView === 'title' && (
+            <FirstRunOnboarding onClose={() => setShowOnboarding(false)} />
+          )}
           {renderView()}
           {error && <p className='error-message global-error'>Error: {error}</p>}
         </div>
 
-        {/* Modals */}
-        {_showLoginModal && (
-          <LoginScreen
-            onLoginSuccess={handleLoginSuccess}
-            onNavigateBack={navigateToTitle}
-            onNavigateToRegister={navigateToRegister}
-          />
-        )}
-        {_showRegisterModal && (
-          <RegisterScreen
-            onRegisterSuccess={handleRegisterSuccess}
-            onNavigateBack={navigateToLogin}
-          />
-        )}
       </div>
     </ErrorBoundary>
   );
 }
-
-// --- Need to import components used in findComponentForPhase ---
-import _Lobby from './components/Lobby';
-import _CardSelectionScreen from './components/CardSelectionScreen';
-import _PromptScreen from './components/PromptScreen';
-import _VotingScreen from './components/VotingScreen';
-import _VoteRevealScreen from './components/VoteRevealScreen';
-// FinalResultsScreen is already imported
 
 export default App;

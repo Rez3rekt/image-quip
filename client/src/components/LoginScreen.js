@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import '../styles/LoginScreen.css'; // Create this CSS file
-import { SERVER_URL } from '../config'; // Import SERVER_URL
+import { SERVER_URL, isGameServerConfigured, GAME_SERVER_CONFIG_HELP } from '../config';
 import { LoadingButton } from './common';
 import { useToast } from './common'; // Import toast hook
 
@@ -14,6 +14,12 @@ function LoginScreen({ onLoginSuccess, onNavigateBack, onNavigateToRegister }) {
   const handleLogin = async e => {
     e.preventDefault();
     setError('');
+    if (!isGameServerConfigured()) {
+      const msg = `Game server is not configured for this site. ${GAME_SERVER_CONFIG_HELP}`;
+      setError(msg);
+      showError(msg, 12000);
+      return;
+    }
     setIsLoading(true);
 
     try {
@@ -30,13 +36,8 @@ function LoginScreen({ onLoginSuccess, onNavigateBack, onNavigateToRegister }) {
 
       if (response.ok) {
         const data = await response.json();
-        showSuccess('Login successful! Welcome back!', 3000); // Show success toast
-        onLoginSuccess(data); // Pass the full data object
-
-        // Navigate back to title screen after a brief delay
-        setTimeout(() => {
-          onNavigateBack();
-        }, 500);
+        showSuccess('Login successful! Welcome back!', 3000);
+        onLoginSuccess(data);
       } else {
         if (response.status === 401) {
           const errorMsg = 'Invalid username/email or password. Please try again.';
@@ -49,10 +50,16 @@ function LoginScreen({ onLoginSuccess, onNavigateBack, onNavigateToRegister }) {
         }
       }
     } catch (err) {
-      // Safely extract error message without relying on err directly
-      const errorMessage = err?.message || 'Login failed. Please check credentials.';
+      const base = err?.message || 'Login failed. Please check credentials.';
+      const isFetchFail =
+        typeof base === 'string' &&
+        (base.includes('Failed to fetch') || base.includes('NetworkError'));
+      const errorMessage =
+        isFetchFail && isGameServerConfigured()
+          ? `${base} If the API is on another domain, check CORS (ALLOWED_ORIGINS) and that the API uses HTTPS.`
+          : base;
       setError(errorMessage);
-      showError(errorMessage, 5000); // Show error toast
+      showError(errorMessage, 8000);
     } finally {
       setIsLoading(false);
     }
@@ -109,9 +116,9 @@ function LoginScreen({ onLoginSuccess, onNavigateBack, onNavigateToRegister }) {
       </form>
       <div className='register-link'>
         Don&apos;t have an account?{' '}
-        <a onClick={onNavigateToRegister} className='link-button'>
+        <button type='button' onClick={onNavigateToRegister} className='link-button'>
           Register here
-        </a>
+        </button>
       </div>
     </div>
   );
